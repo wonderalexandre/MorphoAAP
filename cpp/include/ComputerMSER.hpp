@@ -1,6 +1,6 @@
 
-#include "../cpp/include/aap_bits/NodeCT.hpp"
-#include "../cpp/include/aap_bits/ComponentTree.hpp"
+#include "../cpp/include/NodeCT.hpp"
+#include "../cpp/include/ComponentTree.hpp"
 
 #ifndef COMPUTER_MSER_H
 #define COMPUTER_MSER_H

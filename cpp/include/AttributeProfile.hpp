@@ -4,8 +4,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
-#include "../cpp/include/aap_bits/ComponentTree.hpp"
-#include "../cpp/include/aap_bits/AttributeFilters.hpp"
+#include "../cpp/include/ComponentTree.hpp"
+#include "../cpp/include/AttributeFilters.hpp"
 
 
 #ifndef ATTRIBUTE_PROFILE_H

@@ -1,4 +1,4 @@
-#include "../include/aap_bits/NodeCT.hpp"
+#include "../include/NodeCT.hpp"
 
 #include <list>
 

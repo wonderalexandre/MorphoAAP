@@ -18,11 +18,11 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 project(automobile)
 
-include_directories("${CMAKE_SOURCE_DIR}/cpp/include/aap_bits")
+include_directories("${CMAKE_SOURCE_DIR}/cpp/include")
 include_directories("${CMAKE_SOURCE_DIR}/python")
 
 file (GLOB SOURCE_FILES "cpp/src/*.cpp")
-file (GLOB HEADER_FILES "cpp/include/aap_bits/*.hpp")
+file (GLOB HEADER_FILES "cpp/include/*.hpp")
 file (GLOB PYTHON_FILES "python/*.cpp" "python/*.hpp")
 
 # Set up such that XCode organizes the files

@@ -3,10 +3,10 @@
 #include <vector>
 #include <stack>
 
-#include "../cpp/include/aap_bits/NodeCT.hpp"
-#include "../cpp/include/aap_bits/ComponentTree.hpp"
-#include "../cpp/include/aap_bits/ComputerMSER.hpp"
-#include "../cpp/include/aap_bits/AttributeComputedIncrementally.hpp"
+#include "../cpp/include/NodeCT.hpp"
+#include "../cpp/include/ComponentTree.hpp"
+#include "../cpp/include/ComputerMSER.hpp"
+#include "../cpp/include/AttributeComputedIncrementally.hpp"
 
 
 

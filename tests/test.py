@@ -23,7 +23,8 @@ percursoProfundidade(tree.root)
 
 
 attr_area = aap.Attribute.computerArea(tree)
-img_filtered = aap.AttributeFilters.prunningMin(tree, attr_area, 5)
+filter = aap.AttributeFilters(tree)
+img_filtered = filter.prunningMin(attr_area, 5)
 print("Imagem filtrada:")
 print( img_filtered )
 

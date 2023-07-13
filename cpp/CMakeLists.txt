@@ -14,7 +14,7 @@ AUX_SOURCE_DIRECTORY(src SRC_FILES)
 
 # Headers
 set(PROJECT_SOURCE_DIR "src")
-set(PROJECT_INCLUDE_DIR "include/aap_bits")
+set(PROJECT_INCLUDE_DIR "include")
 
 # Source files
 set(SOURCE_FILES
@@ -40,13 +40,13 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 add_library(aap SHARED ${SOURCE_FILES})
 
 # Include directories
-target_include_directories(aap PRIVATE include/aap_bits)
+target_include_directories(aap PRIVATE include)
 
 # Install
 install(TARGETS aap DESTINATION lib)
 
 # Install the headers
-install(FILES include/aap DESTINATION include)
+#install(FILES include/aap DESTINATION include)
 
 # Create base directory
-install(DIRECTORY include/aap_bits DESTINATION include)
+install(DIRECTORY include DESTINATION include)
