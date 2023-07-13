@@ -1,0 +1,11 @@
+#ifndef AAP_LIBRARY_H
+#define AAP_LIBRARY_H
+
+#include "aap_bits/NodeCT.hpp"
+#include "aap_bits/ComponentTree.hpp"
+#include "aap_bits/AttributeProfile.hpp"
+#include "aap_bits/ComputerMSER.hpp"
+#include "aap_bits/AttributeComputedIncrementally.hpp"
+#include "aap_bits/AttributeFilters.hpp"
+
+#endif
