@@ -205,60 +205,6 @@ int ComponentTree::getNumColsOfImage(){
 }
 
 
-/*
-void ComponentTree::prunningMin(double *attribute, double threshold, int *img){
-	std::stack<NodeCT*> s;
-	s.push(this->getRoot());
-	while(!s.empty()){
-		NodeCT *node = s.top(); s.pop();
-		for (int p : node->getCNPs()){
-			img[p] = node->getLevel();
-		}
-		for (NodeCT *child: node->getChildren()){
-			if(attribute[child->getIndex()] > threshold){
-				s.push(child);
-			}else{
-				std::stack<NodeCT*> stackSubtree;
-				stackSubtree.push(child);
-				while(!stackSubtree.empty()){
-					NodeCT *childChild = stackSubtree.top(); stackSubtree.pop();
-					for (int p : childChild->getCNPs()){
-						img[p] = node->getLevel();
-					}
-					for (NodeCT *childChildChild: childChild->getChildren())
-						stackSubtree.push(childChildChild);
-				}
-			}
-			
-		}
-	}
-}
-
-
-py::array_t<int> ComponentTree::prunningMin(py::array_t<double> &attr, double threshold){
-
-	auto buf_attr = attr.request();
-		
-	double *attribute = (double *) buf_attr.ptr;
-
-	int n = this->numRows * this->numCols;
-	auto img_numpy = py::array(py::buffer_info(
-			nullptr,            
-			sizeof(int),     
-			py::format_descriptor<int>::value, 
-			1,         
-			{ ( n ) }, 
-			{ sizeof(int) }
-		));
-	auto buf_img = img_numpy.request();
-	int *img = (int *) buf_img.ptr;
-
-	this->prunningMin(attribute, threshold, img);
-
-	return img_numpy;
-
-}*/
-
 py::array_t<int> ComponentTree::reconstructionImage(){
 	int n = this->numRows * this->numCols;
 	auto img_numpy = py::array(py::buffer_info(

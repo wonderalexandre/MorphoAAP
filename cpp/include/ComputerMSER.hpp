@@ -36,6 +36,8 @@ public:
 	int descendantNodeWithMinStability(NodeCT* node);
 	
     int ascendantNodeWithMinStability(NodeCT* node);
+
+	double* getStabilities();
 };
 
 #endif

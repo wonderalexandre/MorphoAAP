@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 #include <stack>
+#include <limits.h>
 
 #include "../cpp/include/NodeCT.hpp"
 #include "../cpp/include/ComponentTree.hpp"
@@ -42,7 +43,7 @@
 			return ( this->attribute[ascendant[node->getIndex()]] - this->attribute[this->descendants[node->getIndex()]]) / double(this->attribute[node->getIndex()]);
 		}
 		else{
-			return 99999999999999;
+			return INT_MAX;
 		}
 	}
 
@@ -89,7 +90,7 @@
 			if(this->ascendant[node->getIndex()] != -1 && this->descendants[node->getIndex()] != -1){
 				this->stability[node->getIndex()] = this->getStability(node);
 			}else{
-				this->stability[node->getIndex()] = -1;
+				this->stability[node->getIndex()] = INT_MAX;
 			}
 			
 		}
@@ -119,6 +120,10 @@
 			return -1;
 	}
 	
+	double* ComputerMSER::getStabilities(){
+		return this->stability;
+	}
+
     int ComputerMSER::ascendantNodeWithMinStability(NodeCT* node) {
 		if( this->stability[this->ascendant[node->getIndex()] ] != -1)
 			return this->ascendant[node->getIndex()];
