@@ -32,3 +32,4 @@
 *.app
 cpp/.DS_Store
 cpp/include/.DS_Store
+build/*
