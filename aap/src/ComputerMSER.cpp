@@ -4,10 +4,10 @@
 #include <stack>
 #include <limits.h>
 
-#include "../cpp/include/NodeCT.hpp"
-#include "../cpp/include/ComponentTree.hpp"
-#include "../cpp/include/ComputerMSER.hpp"
-#include "../cpp/include/AttributeComputedIncrementally.hpp"
+#include "../aap/include/NodeCT.hpp"
+#include "../aap/include/ComponentTree.hpp"
+#include "../aap/include/ComputerMSER.hpp"
+#include "../aap/include/AttributeComputedIncrementally.hpp"
 
 
 

@@ -1,7 +1,7 @@
 
-#include "../cpp/include/NodeCT.hpp"
-#include "../cpp/include/ComponentTree.hpp"
-#include "../cpp/include/ComputerMSER.hpp"
+#include "../aap/include/NodeCT.hpp"
+#include "../aap/include/ComponentTree.hpp"
+#include "../aap/include/ComputerMSER.hpp"
 
 #include <stack>
 #include <limits.h>

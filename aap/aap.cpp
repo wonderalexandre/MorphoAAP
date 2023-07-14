@@ -1,9 +1,9 @@
 
-#include "../cpp/include/NodeCT.hpp"
-#include "../cpp/include/ComponentTree.hpp"
-#include "../cpp/include/AttributeProfile.hpp"
-#include "../cpp/include/AttributeComputedIncrementally.hpp"
-#include "../cpp/include/AttributeFilters.hpp"
+#include "../aap/include/NodeCT.hpp"
+#include "../aap/include/ComponentTree.hpp"
+#include "../aap/include/AttributeProfile.hpp"
+#include "../aap/include/AttributeComputedIncrementally.hpp"
+#include "../aap/include/AttributeFilters.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

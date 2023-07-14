@@ -1,5 +1,5 @@
-#include "../cpp/include/NodeCT.hpp"
-#include "../cpp/include/ComponentTree.hpp"
+#include "../aap/include/NodeCT.hpp"
+#include "../aap/include/ComponentTree.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
