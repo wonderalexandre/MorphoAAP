@@ -33,3 +33,7 @@
 cpp/.DS_Store
 cpp/include/.DS_Store
 build/*
+dist/*
+build_setup_py/*
+morphoaap.egg-info
+.DS_Store
