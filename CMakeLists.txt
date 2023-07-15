@@ -5,9 +5,10 @@
 
 cmake_minimum_required(VERSION 3.1)
 
+
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -16,28 +17,31 @@ endif()
 set(CMAKE_CXX_FLAGS "-O3")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-project(automobile)
+project(morphoaap)
 
-include_directories("${CMAKE_SOURCE_DIR}/aap/include")
-include_directories("${CMAKE_SOURCE_DIR}/aap")
+include_directories("${CMAKE_SOURCE_DIR}/morphoaap/include")
+include_directories("${CMAKE_SOURCE_DIR}/morphoaap")
 
-file (GLOB SOURCE_FILES "aap/src/*.cpp")
-file (GLOB HEADER_FILES "aap/include/*.hpp")
-file (GLOB PYTHON_FILES "aap/*.cpp" "aap/*.hpp")
+file (GLOB SOURCE_FILES "morphoaap/src/*.cpp")
+file (GLOB HEADER_FILES "morphoaap/include/*.hpp")
+file (GLOB PYTHON_FILES "morphoaap/*.cpp" "morphoaap/*.hpp")
 
 # Set up such that XCode organizes the files
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES} ${HEADER_FILES} ${PYTHON_FILES} )
 
 include(pybind11.cmake)
-pybind11_add_module(aap 
+pybind11_add_module(morphoaap 
 	${SOURCE_FILES}
 	${HEADER_FILES}
 	${PYTHON_FILES}
 )
 
-target_link_libraries(aap PUBLIC)
+target_link_libraries(morphoaap PUBLIC)
 
-install(TARGETS aap
+install(TARGETS morphoaap
   COMPONENT python
   LIBRARY DESTINATION "${PYTHON_LIBRARY_DIR}"
   )
+
+
+  

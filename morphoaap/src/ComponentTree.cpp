@@ -3,8 +3,8 @@
 #include <stack>
 #include <unordered_map>
 
-#include "../aap/include/NodeCT.hpp"
-#include "../aap/include/ComponentTree.hpp"
+#include "../morphoaap/include/NodeCT.hpp"
+#include "../morphoaap/include/ComponentTree.hpp"
 
 
 #include <pybind11/pybind11.h>

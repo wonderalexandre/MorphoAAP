@@ -1,6 +1,6 @@
 
-#include "../aap/include/NodeCT.hpp"
-#include "../aap/include/ComponentTree.hpp"
+#include "../morphoaap/include/NodeCT.hpp"
+#include "../morphoaap/include/ComponentTree.hpp"
 
 #ifndef COMPUTER_MSER_H
 #define COMPUTER_MSER_H

@@ -1,17 +1,15 @@
 
-#include "../aap/include/NodeCT.hpp"
-#include "../aap/include/ComponentTree.hpp"
-#include "../aap/include/AttributeProfile.hpp"
-#include "../aap/include/AttributeComputedIncrementally.hpp"
-#include "../aap/include/AttributeFilters.hpp"
+#include "../morphoaap/include/NodeCT.hpp"
+#include "../morphoaap/include/ComponentTree.hpp"
+#include "../morphoaap/include/AttributeProfile.hpp"
+#include "../morphoaap/include/AttributeComputedIncrementally.hpp"
+#include "../morphoaap/include/AttributeFilters.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
 
 namespace py = pybind11;
-
-
 
 
 void init_NodeCT(py::module &m){
@@ -55,7 +53,7 @@ void init_AttributeFilters(py::module &m){
 }
 
 
-PYBIND11_MODULE(aap, m) {
+PYBIND11_MODULE(morphoaap, m) {
     // Optional docstring
     m.doc() = "Adative attribute profiles";
     

@@ -1,5 +1,5 @@
 import numpy as np
-import aap
+import morphoaap as aap
 
 img = np.array([
     [5,5,5],

@@ -1,5 +1,5 @@
 
-#include "../aap/include/AttributeComputedIncrementally.hpp"
+#include "../morphoaap/include/AttributeComputedIncrementally.hpp"
 
 
 void AttributeComputedIncrementally::preProcessing(NodeCT *v){}

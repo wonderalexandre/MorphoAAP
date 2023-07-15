@@ -4,10 +4,10 @@
 #include <stack>
 #include <limits.h>
 
-#include "../aap/include/NodeCT.hpp"
-#include "../aap/include/ComponentTree.hpp"
-#include "../aap/include/ComputerMSER.hpp"
-#include "../aap/include/AttributeComputedIncrementally.hpp"
+#include "../morphoaap/include/NodeCT.hpp"
+#include "../morphoaap/include/ComponentTree.hpp"
+#include "../morphoaap/include/ComputerMSER.hpp"
+#include "../morphoaap/include/AttributeComputedIncrementally.hpp"
 
 
 
