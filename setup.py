@@ -15,23 +15,21 @@ def extend_build():
                 sys.stderr.write("CMake is required to build this package.\n")
                 sys.exit(-1)
             _source_dir = os.path.split(__file__)[0]
-            _build_dir = os.path.join(_source_dir, 'build_setup_py')
-            _prefix = get_python_lib()
+            _build_dir = os.path.join(_source_dir, 'build')
+            _prefix = sysconfig.get_config_var('LIBDIR') #get_python_lib()
             try:
                 cmake_configure_command = [
                     'cmake',
                     '-H{0}'.format(_source_dir),
                     '-B{0}'.format(_build_dir),
                     '-DCMAKE_INSTALL_PREFIX={0}'.format(_prefix),
-                    #'-DTYPE_EXECUTABLE={0}'.format(sys.executable),
                     '-DPYTHON_LIBRARY_DIR={0}'.format(_prefix),
                 ]
                 _generator = os.getenv('CMAKE_GENERATOR')
                 if _generator is not None:
                     cmake_configure_command.append('-G{0}'.format(_generator))
                 spawn.spawn(cmake_configure_command)
-                spawn.spawn(
-                    ['cmake', '--build', _build_dir, '--target', 'install'])
+                #spawn.spawn(['cmake', '--build', _build_dir, '--target', 'install'])
                 os.chdir(cwd)
             except spawn.DistutilsExecError:
                 sys.stderr.write("Error while building with CMake\n")
@@ -43,8 +41,7 @@ def extend_build():
 
 _here = os.path.abspath(os.path.dirname(__file__))
 
-if sys.version_info[0] < 3:
-    with open(os.path.join(_here, 'README.md')) as f:
+if sys.version_info[0] < 3:#    with open(os.path.join(_here, 'README.md')) as f:
         long_description = f.read()
 else:
     with open(os.path.join(_here, 'README.md'), encoding='utf-8') as f:
@@ -65,7 +62,7 @@ setup(
     author_email='wonderalexandre@gmail.com',
     license='GPL-3.0',
     url = 'https://github.com/wonderalexandre/aap',
-    packages=[_this_package],
+    packages=[''],
     keywords = 'attribute profiles, mathematical morphology, morphological tree',
     include_package_data=True,
     classifiers=[

@@ -2,8 +2,7 @@
 #include <vector>
 
 #include "../morphoaap/include/NodeCT.hpp"
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+
 #include <pybind11/numpy.h>
 
 #ifndef COMPONENT_TREE_H

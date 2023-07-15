@@ -19,24 +19,6 @@ endif()
 
 
 
-
-
-
-
-cmake_minimum_required(VERSION 3.1)
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CMAKE_CXX_FLAGS "-O3")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
-project(morphoaap VERSION 0.0.1)
-
-# Include dir
-#include_directories(/usr/local/include)
-
 # Src
 AUX_SOURCE_DIRECTORY(src SRC_FILES)
 
@@ -51,7 +33,7 @@ include_directories("${CMAKE_SOURCE_DIR}/morphoaap")
 set(SOURCE_FILES
     ${PROJECT_INCLUDE_DIR}/NodeCT.hpp
     ${PROJECT_SOURCE_DIR}/NodeCT.cpp
-    ${PROJECT_SOURCE_DIR}/AttributeComputedIncrementally.hpp
+    ${PROJECT_INCLUDE_DIR}/AttributeComputedIncrementally.hpp
     ${PROJECT_SOURCE_DIR}/AttributeComputedIncrementally.cpp   
     ${PROJECT_INCLUDE_DIR}/ComponentTree.hpp
     ${PROJECT_SOURCE_DIR}/ComponentTree.cpp
@@ -75,24 +57,11 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 add_library(morphoaap
     SHARED ${SOURCE_FILES}
     MODULE
-        aap.cpp
+    morphoaap.cpp
   )
 
 
 
-  file (GLOB SOURCE_FILES "morphoaap/src/*.cpp")
-  file (GLOB HEADER_FILES "morphoaap/include/*.hpp")
-  file (GLOB PYTHON_FILES "morphoaap/*.cpp" "morphoaap/*.hpp")
-  
-  # Set up such that XCode organizes the files
-  source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES} ${HEADER_FILES} ${PYTHON_FILES} )
-  
-  include(pybind11.cmake)
-  pybind11_add_module(morphoaap 
-      ${SOURCE_FILES}
-      ${HEADER_FILES}
-      ${PYTHON_FILES}
-  )
 
 
 # workaround for problem with different names of some math
@@ -111,28 +80,22 @@ target_link_libraries(morphoaap
     pybind11::module
 )
 
-set_target_properties(aap-feature
+set_target_properties(morphoaap
   PROPERTIES
     PREFIX "${PYTHON_MODULE_PREFIX}"
     SUFFIX "${PYTHON_MODULE_EXTENSION}"
   )
 
 
-install(TARGETS morphoaap
-  LIBRARY DESTINATION morphoaap
-)
-
-
-
 
 # Include directories
-target_include_directories(morphoaap PRIVATE include)
+#target_include_directories(morphoaap PRIVATE include)
 
 # Install
-install(TARGETS morphoaap DESTINATION lib)
+#install(TARGETS morphoaap DESTINATION lib)
 
 # Install the headers
-install(FILES include/morphoaap DESTINATION include)
+#install(FILES include/morphoaap DESTINATION include)
 
 # Create base directory
-install(DIRECTORY include DESTINATION include)
+#install(DIRECTORY include DESTINATION include)

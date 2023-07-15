@@ -36,12 +36,19 @@ pybind11_add_module(morphoaap
 	${PYTHON_FILES}
 )
 
+
 target_link_libraries(morphoaap PUBLIC)
 
 install(TARGETS morphoaap
   COMPONENT python
   LIBRARY DESTINATION "${PYTHON_LIBRARY_DIR}"
   )
+
+
+
+
+
+
 
 
   
