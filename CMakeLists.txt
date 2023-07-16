@@ -5,10 +5,9 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -19,8 +18,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 project(morphoaap)
 
-include_directories("${CMAKE_SOURCE_DIR}/morphoaap/include")
-include_directories("${CMAKE_SOURCE_DIR}/morphoaap")
+include_directories("${CMAKE_SOURCE_DIR}/cpp/include/aap_bits")
+include_directories("${CMAKE_SOURCE_DIR}/python")
 
 file (GLOB SOURCE_FILES "morphoaap/src/*.cpp")
 file (GLOB HEADER_FILES "morphoaap/include/*.hpp")
@@ -36,19 +35,9 @@ pybind11_add_module(morphoaap
 	${PYTHON_FILES}
 )
 
-
 target_link_libraries(morphoaap PUBLIC)
 
 install(TARGETS morphoaap
   COMPONENT python
   LIBRARY DESTINATION "${PYTHON_LIBRARY_DIR}"
   )
-
-
-
-
-
-
-
-
-  

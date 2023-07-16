@@ -3,8 +3,8 @@
 
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
-#include "../morphoaap/include/ComponentTree.hpp"
-#include "../morphoaap/include/AttributeFilters.hpp"
+#include "../include/ComponentTree.hpp"
+#include "../include/AttributeFilters.hpp"
 
 
 #ifndef ATTRIBUTE_PROFILE_H

@@ -1,5 +1,5 @@
 
-#include "../morphoaap/include/AttributeFilters.hpp"
+#include "../include/AttributeFilters.hpp"
 
 
     AttributeFilters::AttributeFilters(ComponentTree* tree){

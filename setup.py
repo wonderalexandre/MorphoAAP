@@ -22,14 +22,14 @@ def extend_build():
                     'cmake',
                     '-H{0}'.format(_source_dir),
                     '-B{0}'.format(_build_dir),
-                    '-DCMAKE_INSTALL_PREFIX={0}'.format(_prefix),
+                    #'-DCMAKE_INSTALL_PREFIX={0}'.format(_prefix),
                     '-DPYTHON_LIBRARY_DIR={0}'.format(_prefix),
                 ]
                 _generator = os.getenv('CMAKE_GENERATOR')
                 if _generator is not None:
                     cmake_configure_command.append('-G{0}'.format(_generator))
                 spawn.spawn(cmake_configure_command)
-                #spawn.spawn(['cmake', '--build', _build_dir, '--target', 'install'])
+                spawn.spawn(['cmake', '--build', _build_dir, '--target', 'install'])
                 os.chdir(cwd)
             except spawn.DistutilsExecError:
                 sys.stderr.write("Error while building with CMake\n")
@@ -62,7 +62,7 @@ setup(
     author_email='wonderalexandre@gmail.com',
     license='GPL-3.0',
     url = 'https://github.com/wonderalexandre/aap',
-    packages=[''],
+    packages=['morphoaap'],
     keywords = 'attribute profiles, mathematical morphology, morphological tree',
     include_package_data=True,
     classifiers=[

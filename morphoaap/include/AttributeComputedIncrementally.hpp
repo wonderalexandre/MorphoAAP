@@ -1,5 +1,5 @@
-#include "../morphoaap/include/NodeCT.hpp"
-#include "../morphoaap/include/ComponentTree.hpp"
+#include "../include/NodeCT.hpp"
+#include "../include/ComponentTree.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>

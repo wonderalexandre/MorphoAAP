@@ -1,7 +1,7 @@
 #include <list>
 #include <vector>
 
-#include "../morphoaap/include/NodeCT.hpp"
+#include "../include/NodeCT.hpp"
 
 #include <pybind11/numpy.h>
 

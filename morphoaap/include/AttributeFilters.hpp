@@ -1,7 +1,7 @@
 
-#include "../morphoaap/include/NodeCT.hpp"
-#include "../morphoaap/include/ComponentTree.hpp"
-#include "../morphoaap/include/ComputerMSER.hpp"
+#include "../include/NodeCT.hpp"
+#include "../include/ComponentTree.hpp"
+#include "../include/ComputerMSER.hpp"
 
 #include <stack>
 #include <limits.h>

@@ -1,4 +1,4 @@
-#include "../morphoaap/include/NodeCT.hpp"
+#include "../include/NodeCT.hpp"
 
 #include <list>
 

@@ -3,11 +3,11 @@
 #include <stack>
 #include <unordered_map>
 
-#include "../morphoaap/include/AttributeProfile.hpp"
-#include "../morphoaap/include/ComponentTree.hpp"
-#include "../morphoaap/include/NodeCT.hpp"
-#include "../morphoaap/include/AttributeComputedIncrementally.hpp"
-#include "../morphoaap/include/AttributeFilters.hpp"
+#include "../include/AttributeProfile.hpp"
+#include "../include/ComponentTree.hpp"
+#include "../include/NodeCT.hpp"
+#include "../include/AttributeComputedIncrementally.hpp"
+#include "../include/AttributeFilters.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
