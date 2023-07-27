@@ -1,73 +1,98 @@
-import distutils.command.build as _build
 import os
+import re
 import sys
 import sysconfig
-from distutils import spawn
-from distutils.sysconfig import get_python_lib
+import platform
+import subprocess
 
-from setuptools import setup
+from pathlib import Path 
 
-def extend_build():
-    class build(_build.build):
-        def run(self):
-            cwd = os.getcwd()
-            if spawn.find_executable('cmake') is None:
-                sys.stderr.write("CMake is required to build this package.\n")
-                sys.exit(-1)
-            _source_dir = os.path.split(__file__)[0]
-            _build_dir = os.path.join(_source_dir, 'build')
-            _prefix = sysconfig.get_config_var('LIBDIR') #get_python_lib()
-            try:
-                cmake_configure_command = [
-                    'cmake',
-                    '-H{0}'.format(_source_dir),
-                    '-B{0}'.format(_build_dir),
-                    #'-DCMAKE_INSTALL_PREFIX={0}'.format(_prefix),
-                    '-DPYTHON_LIBRARY_DIR={0}'.format(_prefix),
-                ]
-                _generator = os.getenv('CMAKE_GENERATOR')
-                if _generator is not None:
-                    cmake_configure_command.append('-G{0}'.format(_generator))
-                spawn.spawn(cmake_configure_command)
-                spawn.spawn(['cmake', '--build', _build_dir, '--target', 'install'])
-                os.chdir(cwd)
-            except spawn.DistutilsExecError:
-                sys.stderr.write("Error while building with CMake\n")
-                sys.exit(-1)
-            _build.build.run(self)
+from distutils.version import LooseVersion
+from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext
+import setuptools
 
-    return build
+class CMakeExtesion(Extension):
+  def __init__(self, name, sourcedir=""):
+    Extension.__init__(self, name, sources=[])
+    self.sourcedir = os.path.abspath(sourcedir)
 
+class CMakeBuild(build_ext):
+  def run(self):
+    try:
+      out = subprocess.check_output(["cmake", "--version"])
+    except:
+      raise RuntimeError("CMake must be installed to build the following extension: "
+        + ",".join(e.name for e in self.extensions))
+    
+    if platform.system() == "Windows":
+      cmake_version = LooseVersion(re.search(r"versions\s*([\d.]+)", out.decode()).group(1))
 
-_here = os.path.abspath(os.path.dirname(__file__))
+      if cmake_version < "3.1.0":
+        raise RuntimeError("CMake >= 3.1.0 is required on Windows")
 
-if sys.version_info[0] < 3:#    with open(os.path.join(_here, 'README.md')) as f:
-        long_description = f.read()
-else:
-    with open(os.path.join(_here, 'README.md'), encoding='utf-8') as f:
-        long_description = f.read()
+    for ext in self.extensions:
+      self.build_extension(ext)
 
-_this_package = 'morphoaap'
+  def build_extension(self, ext):
+    extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
+    prefix = sysconfig.get_config_var("LIBDIR")
+    cmake_args = ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir, 
+                  "-DTYPE_EXECUTABLE=" + sys.executable,
+                  "-DPYTHON_LIBRARY_DIR={}".format(prefix)]
+    
+    self.extdir = extdir
 
-version = {}
-with open(os.path.join(_here, _this_package, 'version.py')) as f:
-    exec(f.read(), version)
+    cfg = "Debug" if self.debug else "Release"
+    build_args = ["--config", cfg]
+
+    if platform.system() == "Windows":
+      cmake_args += ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}".format(cfg.upper(), extdir)]
+      if sys.maxsize > 2**32:
+        cmake_args += ["-A", "x64"]
+      build_args += ["--", "/m"]
+    else:
+      cmake_args += ["-DCMAKE_BUILD_TYPE=" + cfg]
+      build_args += ["--", "-j2"]
+
+    env = os.environ.copy()
+    env["CXXFLAGS"] = '{} - DVERSION_INFO=\\"{}\\"'.format(env.get("CXXFLAGS", ""), 
+      self.distribution.get_version())
+
+    if not os.path.exists(self.build_temp):
+      os.makedirs(self.build_temp)
+    
+    subprocess.check_call(["cmake", ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env)
+    subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
+    self.move_output(ext)
+    print()
+
+  def move_output(self, ext):
+    extdir = Path(self.extdir).resolve()
+    dest_path = Path(self.get_ext_fullpath(ext.name)).resolve()
+    source_path = extdir / self.get_ext_filename(ext.name)
+    dest_directory = dest_path.parents[0]
+    dest_directory.mkdir(parents=True, exist_ok=True)
+    self.copy_file(source_path, dest_path)
 
 setup(
-    name="morphoaap",
-    version="0.0.5",
-    description='A simple library for adative attribute profiles',
-    long_description="",
-    author='Wonder Alexandre Luz Alves',
-    author_email='wonderalexandre@gmail.com',
-    license='GPL-3.0',
-    url = 'https://github.com/wonderalexandre/aap',
-    packages=['morphoaap'],
-    keywords = 'attribute profiles, mathematical morphology, morphological tree',
-    include_package_data=True,
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Science/Research',
-        'Programming Language :: Python :: 3.6'
-    ],
-    cmdclass={'build': extend_build()})
+  name="morphoaap",
+  version="0.0.5",
+  description="A simple library for adative attribute profiles",
+  long_description="",
+  author="Wonder Alexandre Luz Alves",
+  author_email="worderalexandre@gmail.com",
+  license="GPL-3.0",
+  url= "https://github.com/wonderalexandre/aap",
+  #packages=["morphoaap"],
+  keywords= "attribute profiles, mathematical morphology, morphological trees",
+  #include_package_data=True,
+  classifiers=[
+    "Development :: 3 - Alpha",
+    "Intended Audicience :: Science/Research",
+    "Programming Language :: Python 3.6"
+  ],
+  ext_modules=[CMakeExtesion(name="morphoaap")],
+  cmdclass=dict(build_ext=CMakeBuild),
+  zip_safe=False
+)
