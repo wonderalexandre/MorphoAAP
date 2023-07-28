@@ -77,7 +77,7 @@ class CMakeBuild(build_ext):
 
 setup(
   name="morphoaap",
-  version="0.0.5",
+  version="0.0.6",
   description="A simple library for adative attribute profiles",
   long_description="",
   author="Wonder Alexandre Luz Alves",
@@ -88,9 +88,10 @@ setup(
   keywords= "attribute profiles, mathematical morphology, morphological trees",
   #include_package_data=True,
   classifiers=[
-    "Development :: 3 - Alpha",
-    "Intended Audicience :: Science/Research",
-    "Programming Language :: Python 3.6"
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Programming Language :: Python"
   ],
   ext_modules=[CMakeExtesion(name="morphoaap")],
   cmdclass=dict(build_ext=CMakeBuild),
