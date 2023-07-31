@@ -4,6 +4,7 @@
 #include "include/AttributeProfile.hpp"
 #include "include/AttributeComputedIncrementally.hpp"
 #include "include/AttributeFilters.hpp"
+#include "include/ComputerMSER.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -37,7 +38,8 @@ void init_ComponentTree(py::module &m){
 void init_AttributeProfile(py::module &m){
     	py::class_<AttributeProfile>(m, "AttributeProfile")
         .def(py::init<py::array_t<int> &, int,int>())
-        .def("getAP", &AttributeProfile::getAP );
+        .def("getAP", &AttributeProfile::getAP )
+        .def("getAAP", &AttributeProfile::getAAP );
 }
 
 void init_AttributeComputedIncrementally(py::module &m){
@@ -49,9 +51,17 @@ void init_AttributeComputedIncrementally(py::module &m){
 void init_AttributeFilters(py::module &m){
     py::class_<AttributeFilters>(m, "AttributeFilters")
     .def(py::init<ComponentTree *>())
-    .def("prunningMin", py::overload_cast<py::array_t<double> &, double>(&AttributeFilters::prunningMin));
+    .def("prunningMin", py::overload_cast<py::array_t<double> &, double>(&AttributeFilters::prunningMin))
+    .def("prunningMinByAdaptativeThreshold", py::overload_cast<py::array_t<double> &, double, int>(&AttributeFilters::prunningMinByAdaptativeThreshold));
 }
 
+void init_ComputerMSER(py::module &m){
+    py::class_<ComputerMSER>(m, "ComputerMSER")
+    .def(py::init<ComponentTree *>())
+    .def("computerMSER", &ComputerMSER::computerMSER )
+    .def("getStabilities", &ComputerMSER::getStabilities )
+    .def("getStability", &ComputerMSER::getStability );
+}
 
 PYBIND11_MODULE(morphoaap, m) {
     // Optional docstring
@@ -62,4 +72,5 @@ PYBIND11_MODULE(morphoaap, m) {
     init_AttributeProfile(m);
     init_AttributeComputedIncrementally(m);
     init_AttributeFilters(m);
+    init_ComputerMSER(m);
 }

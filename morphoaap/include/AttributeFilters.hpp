@@ -68,7 +68,7 @@ class AttributeFilters{
         ComputerMSER *mser = new ComputerMSER(tree);
 		mser->computerMSER(delta);
 
-		double *stability = mser->getStabilities();
+		std::vector<double> stability = mser->getStabilities();
 		bool *isPruned = new bool[tree->getNumNodes()];
 		for(NodeCT *node: tree->getListNodes()){
             isPruned[node->getIndex()] = false;
