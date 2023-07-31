@@ -48,7 +48,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/AttributeProfile.cpp
     ${PROJECT_INCLUDE_DIR}/AttributeFilters.hpp
     ${PROJECT_SOURCE_DIR}/AttributeFilters.cpp
-    
+    ${PROJECT_INCLUDE_DIR}/Adjacency8.hpp
+    ${PROJECT_SOURCE_DIR}/Adjacency8.cpp
 )
 
 # Set up such that XCode organizes the files correctly

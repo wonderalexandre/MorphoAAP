@@ -1,6 +1,7 @@
 
 #include "../include/NodeCT.hpp"
 #include "../include/ComponentTree.hpp"
+#include <vector>
 
 #ifndef COMPUTER_MSER_H
 #define COMPUTER_MSER_H
@@ -15,21 +16,21 @@ private:
 	int minArea;
 	int maxArea;
 	int num;
-	int* ascendant;
-	int* descendants;
-	double* stability;
+	std::vector<int> ascendant;
+	std::vector<int> descendants;
+	std::vector<double> stability;
 	double *attribute;
 
 	NodeCT* getNodeAscendant(NodeCT* node, int h);
 
 	void maxAreaDescendants(NodeCT* nodeAsc, NodeCT* nodeDes);
 	
-	double getStability(NodeCT* node);
+	
 
 public:
 	ComputerMSER(ComponentTree* tree);
 
-	bool* computerMSER(int delta);
+	std::vector<bool> computerMSER(int delta);
 
     int getNumNodes();
 
@@ -37,7 +38,9 @@ public:
 	
     int ascendantNodeWithMinStability(NodeCT* node);
 
-	double* getStabilities();
+	std::vector<double> getStabilities();
+
+	double getStability(NodeCT* node);
 };
 
 #endif

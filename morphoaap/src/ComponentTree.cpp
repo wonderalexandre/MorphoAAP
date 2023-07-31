@@ -5,7 +5,7 @@
 
 #include "../include/NodeCT.hpp"
 #include "../include/ComponentTree.hpp"
-
+#include "../include/Adjacency8.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -18,7 +18,7 @@ int* ComponentTree::countingSort(){
 	for (int i = 1; i < n; i++)
 		if(maxvalue < img[i]) maxvalue = img[i];
 			
-	std::vector<int> counter(maxvalue + 1, 0);
+	std::vector<int> counter(maxvalue + 1, 0); 
 	int *orderedPixels = new int[n];
 		
 	if(this->isMaxtree()){
@@ -56,7 +56,7 @@ int ComponentTree::findRoot(int *zPar, int x) {
 		return zPar[x];
 	}
 }
-
+/*
 int ComponentTree::coord2Index(int row, int col) {
 	return (row * this->numCols) + col;
 }
@@ -73,13 +73,13 @@ std::vector<int> ComponentTree::getAdjPixels(int index) {
 			
 		
 	return listAdj;
-}
+}*/
 
 
 
 void ComponentTree::createTreeByUnionFind() {
 	const int n = this->numRows * this->numCols;
-
+	Adjacency8 adj(this->numRows, this->numCols);
 	int *zPar = new int[n];
 		
 	for (int p = 0; p < n; p++) {
@@ -90,7 +90,7 @@ void ComponentTree::createTreeByUnionFind() {
 		int p = this->orderedPixels[i];
 		this->parent[p] = p;
 		zPar[p] = p;
-		for (int n : this->getAdjPixels(p)) {
+		for (int n : adj.getAdjPixels(p)) {
 			if(zPar[n] != -1){
 				int r = this->findRoot(zPar, n);
 				if(p != r){

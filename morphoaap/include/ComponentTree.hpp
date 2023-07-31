@@ -27,8 +27,8 @@ private:
 
 	int* countingSort();
 	int findRoot(int *zPar, int x);
-	int coord2Index(int linha, int coluna);
-	std::vector<int> getAdjPixels(int indice);
+	//int coord2Index(int linha, int coluna);
+	//std::vector<int> getAdjPixels(int indice);
 	void createTreeByUnionFind();
 	void reconstruction(NodeCT* node, int* img);
 
