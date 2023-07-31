@@ -28,9 +28,18 @@ img_filtered = filter.prunningMin(attr_area, 5)
 print("Imagem filtrada:")
 print( img_filtered )
 
+img_filtered2 = filter.prunningMinByAdaptativeThreshold(attr_area, 5, 1)
+print("Imagem filtrada (adap):")
+print( img_filtered2 )
+
+
 ap = aap.AttributeProfile(img_vetor, quant_linhas, quant_colunas)
 attr_type = 0 #AREA
 thresholds = [3, 5]
 attr_profile = ap.getAP(thresholds, attr_type);
 print("attribute profile")
 print(attr_profile)
+
+adap_attr_profile = ap.getAAP(thresholds, attr_type, 1);
+print("adaptive attribute profile")
+print(adap_attr_profile)
