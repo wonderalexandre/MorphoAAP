@@ -15,28 +15,50 @@ namespace py = pybind11;
 class ComponentTree {
 
 private:
-    int* img;
+    //int* img;
 	int numCols;
 	int numRows;
 	bool maxtreeTreeType;
 	NodeCT* root;
-	int* parent;
-	int *orderedPixels;
+	//int* parent;
+	//int *orderedPixels;
 	int numNodes;
 	std::list<NodeCT*> listNodes;
 
-	int* countingSort();
+	int* countingSort(int* img);
+	int* createTreeByUnionFind(int* orderedPixels, int* img);
 	int findRoot(int *zPar, int x);
-	//int coord2Index(int linha, int coluna);
-	//std::vector<int> getAdjPixels(int indice);
-	void createTreeByUnionFind();
-	void reconstruction(NodeCT* node, int* img);
+	void reconstruction(NodeCT* node, int* imgOut);
 
 public:
    
+    ComponentTree(int numRows, int numCols, bool isMaxtree);
+
     ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree);
 
-    py::array_t<int> getParent();
+    static py::array_t<int> computerParent(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree){
+		
+		auto buf_input = input.request();
+		int* img = (int *) buf_input.ptr;
+		ComponentTree *tree = new ComponentTree(numRows, numCols, isMaxtree);
+	
+		int* orderedPixels = tree->countingSort(img);
+		int* parent = tree->createTreeByUnionFind(orderedPixels, img);
+		delete[] orderedPixels;
+		delete tree;
+
+		int n = numRows * numCols;
+		auto parent_numpy = py::array(py::buffer_info(
+			parent,            // Pointer to data (nullptr -> ask NumPy to allocate!) 
+			sizeof(int),     // Size of one item 
+			py::format_descriptor<int>::value, // Buffer format 
+			1,          // How many dimensions? 
+			{ ( n ) },  // Number of elements for each dimension 
+			{ sizeof(int) }  // Strides for each dimension 
+		));
+		
+		return parent_numpy;
+	}
 
 	int* getInputImage();
 	
@@ -53,6 +75,7 @@ public:
 	int getNumColsOfImage();
 
 	py::array_t<int> reconstructionImage();
+
 
 
 };

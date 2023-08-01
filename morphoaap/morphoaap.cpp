@@ -16,7 +16,8 @@ namespace py = pybind11;
 void init_NodeCT(py::module &m){
     py::class_<NodeCT>(m, "NodeCT")
 		.def(py::init<>())
-		.def_property_readonly("rep", &NodeCT::getRep )
+		.def_property_readonly("id", &NodeCT::getIndex )
+        .def_property_readonly("rep", &NodeCT::getRep )
 		.def_property_readonly("cnps", &NodeCT::getCNPs )
 		.def_property_readonly("level", &NodeCT::getLevel )
 		.def_property_readonly("children", &NodeCT::getChildren )
@@ -26,9 +27,12 @@ void init_ComponentTree(py::module &m){
       py::class_<ComponentTree>(m, "ComponentTree")
         .def(py::init<py::array_t<int> &, int,int, bool>())
         .def("reconstructionImage", &ComponentTree::reconstructionImage )
-		.def_property_readonly("root", &ComponentTree::getRoot )
-		.def_property_readonly("parent", &ComponentTree::getParent );
+		.def_property_readonly("numNodes", &ComponentTree::getNumNodes )
+        .def_property_readonly("listNodes", &ComponentTree::getListNodes )
+        .def_property_readonly("root", &ComponentTree::getRoot )
+        .def_static("computerParent", &ComponentTree::computerParent);
 
+		//.def_property_readonly("parent", &ComponentTree::getParent );
         //.def("prunningMin", py::overload_cast<py::array_t<double> &, double>(&ComponentTree::prunningMin))
         //.def("prunningMin", &ComponentTree::prunningMin)
         //.def("computerArea", &ComponentTree::computerArea)

@@ -25,8 +25,6 @@ private:
 
 	void maxAreaDescendants(NodeCT* nodeAsc, NodeCT* nodeDes);
 	
-	
-
 public:
 	ComputerMSER(ComponentTree* tree);
 
@@ -41,6 +39,7 @@ public:
 	std::vector<double> getStabilities();
 
 	double getStability(NodeCT* node);
+
 };
 
 #endif

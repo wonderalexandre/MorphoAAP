@@ -40,8 +40,8 @@ py::array_t<double> AttributeProfile::getAP(std::list<double> thresholds, int at
         return ap_numpy;
 	}
 
-	double *attributeMintree = new double[this->mintree->getNumNodes()];
-	double *attributeMaxtree = new double[this->maxtree->getNumNodes()]; 
+	double attributeMintree[this->mintree->getNumNodes()];
+	double attributeMaxtree[this->maxtree->getNumNodes()]; 
 	
 	AttributeComputedIncrementally::computerAttribute(this->mintree->getRoot(),
 						[&attributeMintree](NodeCT* node) -> void {
@@ -105,8 +105,8 @@ py::array_t<double> AttributeProfile::getAAP(std::list<double> thresholds, int a
         return ap_numpy;
 	}
 
-	double *attributeMintree = new double[this->mintree->getNumNodes()];
-	double *attributeMaxtree = new double[this->maxtree->getNumNodes()]; 
+	double attributeMintree[this->mintree->getNumNodes()];
+	double attributeMaxtree[this->maxtree->getNumNodes()]; 
 	
 	AttributeComputedIncrementally::computerAttribute(this->mintree->getRoot(),
 						[&attributeMintree](NodeCT* node) -> void {

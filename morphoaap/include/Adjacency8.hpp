@@ -12,10 +12,16 @@ private:
     int col;    
     int numCols;
     int numRows;
-        
-    const int offsetRow[9] = {-1,-1,-1,  0, 0, 0,   1, 1, 1};
-    const int offsetCol[9] = {-1, 0, 1, -1, 0, 1,  -1, 0, 1};
-    
+
+    /*
+    visitation order
+    3 | 4 | 5
+    2 | 1 | 6
+    9 | 8 | 7
+    */     
+    const int offsetRow[9] = {0, 0, -1, -1, -1, 0, 1, 1,  1};
+    const int offsetCol[9] = {0,-1, -1,  0,  1, 1, 1, 0, -1};
+   
 public:
 
     Adjacency8(int numCols, int numRows);
@@ -32,7 +38,7 @@ public:
             using value_type = int; 
             
             IteratorAdjacency(Adjacency8& obj, int id): instance(obj), index(id)  { }
-            
+
             IteratorAdjacency& operator++() { 
                 this->index = instance.nextValid(); return *this; 
             }

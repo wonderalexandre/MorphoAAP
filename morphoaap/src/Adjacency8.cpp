@@ -1,9 +1,9 @@
 #include "../include/Adjacency8.hpp"
 
 
-Adjacency8::Adjacency8(int numCols, int numRows){
-    this->numCols = numCols;
+Adjacency8::Adjacency8(int numRows, int numCols){
     this->numRows = numRows;
+    this->numCols = numCols;
 }
 
 int Adjacency8::nextValid(){

@@ -40,7 +40,7 @@
 	
 	double ComputerMSER::getStability(NodeCT* node){
 		if(this->ascendant[node->getIndex()] != -1 && this->descendants[node->getIndex()] != -1){
-			return ( this->attribute[ascendant[node->getIndex()]] - this->attribute[this->descendants[node->getIndex()]]) / double(this->attribute[node->getIndex()]);
+			return (this->attribute[ascendant[node->getIndex()]] - this->attribute[this->descendants[node->getIndex()]]) / ( (double) this->attribute[node->getIndex()]);
 		}
 		else{
 			return INT_MAX;
@@ -52,8 +52,9 @@
 		this->tree = tree;
 		this->maxVariation = 0.5;
 		this->minArea = 0;
+		this->maxArea = INT_MAX;
 
-		double *_attribute = new double[this->tree->getNumNodes()]; 
+		double _attribute[this->tree->getNumNodes()]; 
 		AttributeComputedIncrementally::computerAttribute(this->tree->getRoot(),
 						[&_attribute](NodeCT* node) -> void {
 							_attribute[node->getIndex()] = node->getCNPs().size();
@@ -65,7 +66,7 @@
 						});
 
 		this->attribute = _attribute;
-		this->maxArea = attribute[tree->getRoot()->getIndex()];
+		
 	}
 
 	std::vector<bool> ComputerMSER::computerMSER(int delta){
@@ -76,8 +77,6 @@
 		std::vector<int> tmp_des (this->tree->getNumNodes(), -1);
 		this->descendants = tmp_des;
 
-		std::vector<bool> mser(this->tree->getNumNodes(), false);
-		
 		std::vector<double> tmp_stab (this->tree->getNumNodes(), -1);
 		this->stability = tmp_stab;
 		
@@ -95,12 +94,14 @@
 			}
 			
 		}
-
+		
 		this->num = 0;
+		double minStabilityDesc, minStabilityAsc;
+		std::vector<bool> mser(this->tree->getNumNodes(), false);
 		for(NodeCT *node: tree->getListNodes()){
 			if(this->stability[node->getIndex()] != INT_MAX && this->stability[this->ascendant[node->getIndex()] ] != INT_MAX && this->stability[this->descendants[node->getIndex()]] != INT_MAX){
-				double minStabilityDesc = this->stability[this->descendants[node->getIndex()]];
-				double minStabilityAsc = this->stability[this->ascendant[node->getIndex()]];
+				minStabilityDesc = this->stability[this->descendants[node->getIndex()]];
+				minStabilityAsc = this->stability[this->ascendant[node->getIndex()]];
 				if(this->stability[node->getIndex()] < minStabilityDesc && this->stability[node->getIndex()] < minStabilityAsc){
 					if(stability[node->getIndex()] < maxVariation && this->attribute[node->getIndex()] >= minArea && this->attribute[node->getIndex()] <= maxArea){
 						mser[node->getIndex()] = true;
@@ -109,7 +110,6 @@
 				}
 			}
 		}
-
 		return mser;
 	}
 

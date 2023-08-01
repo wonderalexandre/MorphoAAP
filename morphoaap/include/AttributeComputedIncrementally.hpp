@@ -14,26 +14,27 @@ public:
 
     virtual void mergeChildren(NodeCT *parent, NodeCT *child);
 
-    virtual void posProcessing(NodeCT *parent);
+    virtual void postProcessing(NodeCT *parent);
 
     void computerAttribute(NodeCT *root);
 
 	static void computerAttribute(NodeCT* root, 
 										std::function<void(NodeCT*)> preProcessing,
 										std::function<void(NodeCT*, NodeCT*)> mergeChildren,
-										std::function<void(NodeCT*)> posProcessing ){
+										std::function<void(NodeCT*)> postProcessing ){
 		
 		preProcessing(root);
 			
 		for(NodeCT *child: root->getChildren()){
-			AttributeComputedIncrementally::computerAttribute(child, preProcessing, mergeChildren, posProcessing);
+			AttributeComputedIncrementally::computerAttribute(child, preProcessing, mergeChildren, postProcessing);
 			mergeChildren(root, child);
 		}
-		posProcessing(root);
+
+		postProcessing(root);
 	}
 
     static py::array_t<double> computerArea(ComponentTree *tree){
-	    double* attribute = new double[tree->getNumNodes()];
+	    double attribute[tree->getNumNodes()];
 		
 	    AttributeComputedIncrementally::computerAttribute(tree->getRoot(),
 						[&attribute](NodeCT* node) -> void {
