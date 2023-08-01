@@ -4,6 +4,7 @@
 #include "../include/ComputerMSER.hpp"
 
 #include <stack>
+#include <vector>
 #include <limits.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -34,7 +35,7 @@ class AttributeFilters{
                 imgOutput[p] = node->getLevel();
             }
             for (NodeCT *child: node->getChildren()){
-                if(attribute[child->getIndex()] > threshold){
+                if(attribute[child->getIndex()] >= threshold){
                     s.push(child);
                 }else{
                     std::stack<NodeCT*> stackSubtree;
@@ -56,7 +57,7 @@ class AttributeFilters{
 
     
     static void prunningMinByAdaptativeThreshold(ComponentTree *tree, double *attribute, double threshold, int delta, int *imgOutput){
-		bool* selectedPruned = new bool[tree->getNumNodes()]; //nodes pruned
+		std::vector<bool> selectedPruned(tree->getNumNodes(), false); //nodes pruned
 		for(NodeCT *node: tree->getListNodes()){
 			if(node->getParent() != nullptr && attribute[node->getIndex()] <= threshold){
 				if ( attribute[node->getParent()->getIndex()] != attribute[node->getIndex()] ) {
@@ -65,18 +66,17 @@ class AttributeFilters{
 			}
 		}
 		
-        ComputerMSER *mser = new ComputerMSER(tree);
-		mser->computerMSER(delta);
+        ComputerMSER mser(tree);
+		mser.computerMSER(delta);
 
-		double *stability = mser->getStabilities();
-		bool *isPruned = new bool[tree->getNumNodes()];
+		std::vector<double> stability = mser.getStabilities();
+		std::vector<bool> isPruned(tree->getNumNodes(), false);
 		for(NodeCT *node: tree->getListNodes()){
-            isPruned[node->getIndex()] = false;
-			if(selectedPruned[node->getIndex()] && stability[node->getIndex()] != INT_MAX && attribute[node->getIndex()] <= threshold){ //node pruned
+            if(selectedPruned[node->getIndex()] && stability[node->getIndex()] != INT_MAX && attribute[node->getIndex()] < threshold){ //node pruned
 				double min = stability[node->getIndex()];
 				
-				int indexDescMinStabilityDesc = mser->descendantNodeWithMinStability(node);
-				int indexAncMinStabilityAsc = mser->ascendantNodeWithMinStability(node);
+				int indexDescMinStabilityDesc = mser.descendantNodeWithMinStability(node);
+				int indexAncMinStabilityAsc = mser.ascendantNodeWithMinStability(node);
 				double minDesc = INT_MIN;
 				double minAnc =  INT_MIN;
 				if(indexDescMinStabilityDesc != -1) {

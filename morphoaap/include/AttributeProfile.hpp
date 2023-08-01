@@ -26,6 +26,8 @@ public:
 
 	py::array_t<double> getAP(std::list<double> thresholds, int attributeType);
 
+	py::array_t<double> getAAP(std::list<double> thresholds, int attributeType, int delta);
+
 };
 
 #endif

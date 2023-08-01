@@ -6,7 +6,7 @@ void AttributeComputedIncrementally::preProcessing(NodeCT *v){}
 
 void AttributeComputedIncrementally::mergeChildren(NodeCT *parent, NodeCT *child){}
 
-void AttributeComputedIncrementally::posProcessing(NodeCT *parent){}
+void AttributeComputedIncrementally::postProcessing(NodeCT *parent){}
 
 void AttributeComputedIncrementally::computerAttribute(NodeCT *root) {
         preProcessing(root);
@@ -15,5 +15,5 @@ void AttributeComputedIncrementally::computerAttribute(NodeCT *root) {
             computerAttribute(child);
             mergeChildren(root, child);
         }
-        posProcessing(root);
+        postProcessing(root);
 }
