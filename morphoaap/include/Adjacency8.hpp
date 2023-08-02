@@ -17,11 +17,21 @@ private:
     visitation order
     3 | 4 | 5
     2 | 1 | 6
-    9 | 8 | 7
-    */     
+    9 | 8 | 7    
     const int offsetRow[9] = {0, 0, -1, -1, -1, 0, 1, 1,  1};
     const int offsetCol[9] = {0,-1, -1,  0,  1, 1, 1, 0, -1};
-   
+   */   
+
+    /*
+    visitation order
+    2 | 3 | 4
+    1 | o | 5
+    8 | 7 | 6    
+    */
+    const int offsetRow[8] = {0, -1, -1, -1, 0, 1, 1,  1};
+    const int offsetCol[8] = {-1, -1,  0,  1, 1, 1, 0, -1};
+      
+
 public:
 
     Adjacency8(int numCols, int numRows);
