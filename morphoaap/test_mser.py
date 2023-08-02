@@ -60,10 +60,15 @@ img_vetor = img.ravel()
 tree = aap.ComponentTree(img_vetor, numRows, numCols, True)
 
 mser = aap.ComputerMSER(tree)
+mser.computerMSER(1)
 
-attrs_area = aap.Attribute.computerArea(tree)
+nodes = tree.listNodes
+area = aap.Attribute.computerArea(tree)
+asc = mser.ascendants
+des = mser.descendants
+
 filter = aap.AttributeFilters(tree)
 
-I = filter.prunningMinByAdaptativeThreshold(attrs_area, 50, 1)
+I = filter.prunningMinByAdaptativeThreshold(area, 50, 1)
 print("Imagem filtrada (adap):")
 print( I )
