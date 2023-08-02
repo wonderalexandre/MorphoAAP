@@ -23,28 +23,27 @@ int* ComponentTree::countingSort(int* img){
 		
 	if(this->isMaxtree()){
 		for (int i = 0; i < n; i++)
+			counter[img[i]]++;
+
+		for (int i = 1; i < maxvalue; i++) 
+			counter[i] += counter[i - 1];
+		counter[maxvalue] += counter[maxvalue-1];
+		
+		for (int i = n - 1; i >= 0; --i)
+			orderedPixels[--counter[img[i]]] = i;	
+
+	}else{
+		for (int i = 0; i < n; i++)
 			counter[maxvalue - img[i]]++;
 
 		for (int i = 1; i < maxvalue; i++) 
 			counter[i] += counter[i - 1];
 		counter[maxvalue] += counter[maxvalue-1];
 
-		
 		for (int i = n - 1; i >= 0; --i)
 			orderedPixels[--counter[maxvalue - img[i]]] = i;
-	}else{
-		for (int i = 0; i < n; i++)
-			counter[img[i]]++;
-
-		for (int i = 1; i < maxvalue; i++) 
-			counter[i] += counter[i - 1];
-		counter[maxvalue] += counter[maxvalue-1];
-
-		
-		for (int i = n - 1; i >= 0; --i)
-			orderedPixels[--counter[img[i]]] = i;	
 	}
-	//Como remover counter da memoria?
+	
 	return orderedPixels;
 }
 
@@ -109,6 +108,12 @@ ComponentTree::ComponentTree(int numRows, int numCols, bool isMaxtree){
 	this->numRows = numRows;
 	this->numCols = numCols;
 	this->maxtreeTreeType = isMaxtree;
+ }
+
+ ComponentTree::~ComponentTree(){
+	for (NodeCT *node: this->listNodes){
+		delete node;
+	}
  }
 
 ComponentTree::ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree){

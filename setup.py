@@ -77,7 +77,7 @@ class CMakeBuild(build_ext):
 
 setup(
   name="morphoaap",
-  version="0.0.7",
+  version="0.0.8",
   description="A simple library for adative attribute profiles",
   long_description="",
   author="Wonder Alexandre Luz Alves",
@@ -97,3 +97,6 @@ setup(
   cmdclass=dict(build_ext=CMakeBuild),
   zip_safe=False
 )
+#send to pypi
+#1. python setup.py sdist
+#2. pipenv run twine upload dist/* -r pypi

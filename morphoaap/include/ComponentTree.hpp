@@ -36,6 +36,8 @@ public:
 
     ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree);
 
+	~ComponentTree();
+
     static py::array_t<int> computerParent(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree){
 		
 		auto buf_input = input.request();

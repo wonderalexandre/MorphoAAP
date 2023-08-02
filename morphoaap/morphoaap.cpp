@@ -62,9 +62,11 @@ void init_AttributeFilters(py::module &m){
 void init_ComputerMSER(py::module &m){
     py::class_<ComputerMSER>(m, "ComputerMSER")
     .def(py::init<ComponentTree *>())
-    .def("computerMSER", &ComputerMSER::computerMSER )
-    .def("getStabilities", &ComputerMSER::getStabilities )
-    .def("getStability", &ComputerMSER::getStability );
+    .def("computerMSER", &ComputerMSER::computerMSER)
+    .def("getStability", &ComputerMSER::getStability)
+    .def_property_readonly("stabilities", &ComputerMSER::getStabilities)
+    .def_property_readonly("ascendants", &ComputerMSER::getAscendants)
+    .def_property_readonly("descendants", &ComputerMSER::getDescendants);
 }
 
 PYBIND11_MODULE(morphoaap, m) {
