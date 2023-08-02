@@ -22,6 +22,11 @@ AttributeProfile::AttributeProfile(py::array_t<int> &input, int numRows, int num
 
 }
 
+AttributeProfile::~AttributeProfile(){
+	delete this->maxtree;
+	delete this->mintree;
+}
+
 py::array_t<double> AttributeProfile::getAP(std::list<double> thresholds, int attributeType){
 		
 

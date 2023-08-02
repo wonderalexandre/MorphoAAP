@@ -16,7 +16,7 @@ private:
 	int minArea;
 	int maxArea;
 	int num;
-	std::vector<int> ascendant;
+	std::vector<int> ascendants;
 	std::vector<int> descendants;
 	std::vector<double> stability;
 	double *attribute;
@@ -27,6 +27,8 @@ private:
 	
 public:
 	ComputerMSER(ComponentTree* tree);
+
+	~ComputerMSER();
 
 	std::vector<bool> computerMSER(int delta);
 
@@ -39,6 +41,10 @@ public:
 	std::vector<double> getStabilities();
 
 	double getStability(NodeCT* node);
+
+	std::vector<int> getAscendants();
+
+	std::vector<int> getDescendants();
 
 };
 
