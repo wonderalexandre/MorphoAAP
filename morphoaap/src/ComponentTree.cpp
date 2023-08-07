@@ -113,6 +113,7 @@ ComponentTree::ComponentTree(int numRows, int numCols, bool isMaxtree){
  ComponentTree::~ComponentTree(){
 	for (NodeCT *node: this->listNodes){
 		delete node;
+		node = nullptr;
 	}
  }
 

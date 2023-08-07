@@ -10,6 +10,7 @@
 #include "../include/AttributeComputedIncrementally.hpp"
 
 
+#define UNDEF -999999999999
 
     NodeCT* ComputerMSER::getNodeAscendant(NodeCT* node, int h){
 		NodeCT* n = node;
@@ -55,7 +56,7 @@
 		this->tree = tree;
 		this->maxVariation = 0.5;
 		this->minArea = 0;
-		this->maxArea = INT_MAX;
+		//this->maxArea = UNDEF;
 
 		double *_attribute = new double[this->tree->getNumNodes()]; 
 		AttributeComputedIncrementally::computerAttribute(this->tree->getRoot(),
@@ -80,7 +81,7 @@
 		std::vector<int> tmp_des (this->tree->getNumNodes(), -1);
 		this->descendants = tmp_des;
 
-		std::vector<double> tmp_stab (this->tree->getNumNodes(), -1);
+		std::vector<double> tmp_stab (this->tree->getNumNodes(), UNDEF);
 		this->stability = tmp_stab;
 		
 		for(NodeCT *node: tree->getListNodes()){
@@ -92,21 +93,18 @@
 		for(NodeCT *node: tree->getListNodes()){
 			if(this->ascendants[node->getIndex()] != -1 && this->descendants[node->getIndex()] != -1){
 				this->stability[node->getIndex()] = this->getStability(node);
-			}else{
-				this->stability[node->getIndex()] = INT_MAX;
 			}
-			
 		}
 		
 		this->num = 0;
 		double minStabilityDesc, minStabilityAsc;
 		std::vector<bool> mser(this->tree->getNumNodes(), false);
 		for(NodeCT *node: tree->getListNodes()){
-			if(this->stability[node->getIndex()] != INT_MAX && this->stability[this->ascendants[node->getIndex()] ] != INT_MAX && this->stability[this->descendants[node->getIndex()]] != INT_MAX){
+			if(this->stability[node->getIndex()] != UNDEF && this->stability[this->ascendants[node->getIndex()] ] != UNDEF && this->stability[this->descendants[node->getIndex()]] != UNDEF){
 				minStabilityDesc = this->stability[this->descendants[node->getIndex()]];
 				minStabilityAsc = this->stability[this->ascendants[node->getIndex()]];
 				if(this->stability[node->getIndex()] < minStabilityDesc && this->stability[node->getIndex()] < minStabilityAsc){
-					if(stability[node->getIndex()] < maxVariation && this->attribute[node->getIndex()] >= minArea && this->attribute[node->getIndex()] <= maxArea){
+					if(stability[node->getIndex()] < maxVariation && this->attribute[node->getIndex()] >= minArea){//} && this->attribute[node->getIndex()] <= maxArea){
 						mser[node->getIndex()] = true;
 						this->num++;
 					}

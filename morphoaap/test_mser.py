@@ -60,7 +60,7 @@ img_vetor = img.ravel()
 tree = aap.ComponentTree(img_vetor, numRows, numCols, True)
 
 mser = aap.ComputerMSER(tree)
-mser.computerMSER(1)
+bs = mser.computerMSER(1)
 
 nodes = tree.listNodes
 area = aap.Attribute.computerArea(tree)
