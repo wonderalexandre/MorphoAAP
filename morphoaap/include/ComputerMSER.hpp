@@ -8,13 +8,14 @@
 
 
 
+
 class ComputerMSER {
 private:
 	
 	ComponentTree* tree;
 	double maxVariation;
 	int minArea;
-	int maxArea;
+	//int maxArea;
 	int num;
 	std::vector<int> ascendants;
 	std::vector<int> descendants;
