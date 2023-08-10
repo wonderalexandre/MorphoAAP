@@ -10,8 +10,8 @@ AdjacencyRelation::~AdjacencyRelation(){
 AdjacencyRelation::AdjacencyRelation(int numRows, int numCols, double radius){
     this->numRows = numRows;
     this->numCols = numCols;
-    
-
+     
+ 
     int i, j, k, n, dx, dy, r0, r2, i0 = 0;
     this->n = 0;
     r0 = (int) radius;

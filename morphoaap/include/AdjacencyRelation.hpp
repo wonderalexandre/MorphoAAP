@@ -13,7 +13,7 @@ private:
     int numCols;
     int numRows;
     int n;
-
+ 
     int *offsetRow;
     int *offsetCol;
     
