@@ -25,7 +25,8 @@ void init_NodeCT(py::module &m){
 }
 void init_ComponentTree(py::module &m){
       py::class_<ComponentTree>(m, "ComponentTree")
-        .def(py::init<py::array_t<int> &, int,int, bool>())
+        .def(py::init<py::array_t<int> &, int, int, bool, double>())
+        .def(py::init<py::array_t<int> &, int, int, bool>())
         .def("reconstructionImage", &ComponentTree::reconstructionImage )
 		.def_property_readonly("numNodes", &ComponentTree::getNumNodes )
         .def_property_readonly("listNodes", &ComponentTree::getListNodes )

@@ -4,7 +4,7 @@
 #ifndef ADJACENCY_H
 #define ADJACENCY_H
 
-class Adjacency8 {
+class AdjacencyRelation {
 private:
     int id;
     
@@ -12,42 +12,30 @@ private:
     int col;    
     int numCols;
     int numRows;
+    int n;
 
-    /*
-    visitation order
-    3 | 4 | 5
-    2 | 1 | 6
-    9 | 8 | 7    
-    const int offsetRow[9] = {0, 0, -1, -1, -1, 0, 1, 1,  1};
-    const int offsetCol[9] = {0,-1, -1,  0,  1, 1, 1, 0, -1};
-   */   
-
-    /*
-    visitation order
-    2 | 3 | 4
-    1 | o | 5
-    8 | 7 | 6    
-    */
-    const int offsetRow[8] = {0, -1, -1, -1, 0, 1, 1,  1};
-    const int offsetCol[8] = {-1, -1,  0,  1, 1, 1, 0, -1};
+    int *offsetRow;
+    int *offsetCol;
+    
       
 
 public:
 
-    Adjacency8(int numCols, int numRows);
+    AdjacencyRelation(int numCols, int numRows, double radius);
+    ~AdjacencyRelation();
     int nextValid();
-    Adjacency8& getAdjPixels(int row, int col);
-    Adjacency8& getAdjPixels(int index);
+    AdjacencyRelation& getAdjPixels(int row, int col);
+    AdjacencyRelation& getAdjPixels(int index);
 
     class IteratorAdjacency{ 
         private:
     	    int index;
-            Adjacency8&  instance;
+            AdjacencyRelation&  instance;
         public:
         	using iterator_category = std::input_iterator_tag;
             using value_type = int; 
             
-            IteratorAdjacency(Adjacency8& obj, int id): instance(obj), index(id)  { }
+            IteratorAdjacency(AdjacencyRelation& obj, int id): instance(obj), index(id)  { }
 
             IteratorAdjacency& operator++() { 
                 this->index = instance.nextValid(); return *this; 
@@ -63,8 +51,7 @@ public:
             }    
     };
     IteratorAdjacency begin();
-    IteratorAdjacency end();
-    
+    IteratorAdjacency end();	 
 };
 
 #endif
