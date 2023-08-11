@@ -13,14 +13,15 @@
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
 
-AttributeProfile::AttributeProfile(py::array_t<int> &input, int numRows, int numCols){
-		
+AttributeProfile::AttributeProfile(py::array_t<int> &input, int numRows, int numCols, double radiusOfAdjacencyRelation){		
 	this->numRows = numRows;
 	this->numCols = numCols;
-	this->maxtree = new ComponentTree(input, numRows, numCols, true);
-	this->mintree = new ComponentTree(input, numRows, numCols, false);
-
+	this->maxtree = new ComponentTree(input, numRows, numCols, true, radiusOfAdjacencyRelation);
+	this->mintree = new ComponentTree(input, numRows, numCols, false, radiusOfAdjacencyRelation);
 }
+
+AttributeProfile::AttributeProfile(py::array_t<int> &input, int numRows, int numCols)
+	: AttributeProfile(input, numRows, numCols, 1.5) { }		
 
 AttributeProfile::~AttributeProfile(){
 	delete this->maxtree;

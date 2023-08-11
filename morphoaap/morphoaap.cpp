@@ -5,6 +5,7 @@
 #include "include/AttributeComputedIncrementally.hpp"
 #include "include/AttributeFilters.hpp"
 #include "include/ComputerMSER.hpp"
+#include "include/AdjacencyRelation.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -23,6 +24,8 @@ void init_NodeCT(py::module &m){
 		.def_property_readonly("children", &NodeCT::getChildren )
 		.def_property_readonly("parent", &NodeCT::getParent );
 }
+
+
 void init_ComponentTree(py::module &m){
       py::class_<ComponentTree>(m, "ComponentTree")
         .def(py::init<py::array_t<int> &, int, int, bool, double>())
@@ -42,6 +45,7 @@ void init_ComponentTree(py::module &m){
 
 void init_AttributeProfile(py::module &m){
     	py::class_<AttributeProfile>(m, "AttributeProfile")
+        .def(py::init<py::array_t<int> &, int,int, double>())
         .def(py::init<py::array_t<int> &, int,int>())
         .def("getAP", &AttributeProfile::getAP )
         .def("getAAP", &AttributeProfile::getAAP );
@@ -70,6 +74,14 @@ void init_ComputerMSER(py::module &m){
     .def_property_readonly("descendants", &ComputerMSER::getDescendants);
 }
 
+void init_AdjacencyRelation(py::module &m){
+    	py::class_<AdjacencyRelation>(m, "AdjacencyRelation")
+        .def(py::init<int, int, double>())
+        .def_property_readonly("size", &AdjacencyRelation::getSize )
+        .def("getAdjPixels", py::overload_cast<int, int>( &AdjacencyRelation::getAdjPixels ));
+
+}
+
 PYBIND11_MODULE(morphoaap, m) {
     // Optional docstring
     m.doc() = "Adative attribute profiles";
@@ -80,4 +92,5 @@ PYBIND11_MODULE(morphoaap, m) {
     init_AttributeComputedIncrementally(m);
     init_AttributeFilters(m);
     init_ComputerMSER(m);
+    init_AdjacencyRelation(m);
 }

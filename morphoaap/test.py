@@ -24,7 +24,7 @@ img = np.array([
 quant_linhas, quant_colunas = img.shape
 img_vetor = img.ravel()
 
-tree = aap.ComponentTree(img_vetor, quant_linhas, quant_colunas, False)
+tree = aap.ComponentTree(img_vetor, quant_linhas, quant_colunas, False, 1.5)
 
 def percursoProfundidade(node):
   print("rep:"+str(node.rep), "level:"+str(node.level))

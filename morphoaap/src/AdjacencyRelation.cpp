@@ -10,9 +10,8 @@ AdjacencyRelation::~AdjacencyRelation(){
 AdjacencyRelation::AdjacencyRelation(int numRows, int numCols, double radius){
     this->numRows = numRows;
     this->numCols = numCols;
-     
  
-    int i, j, k, n, dx, dy, r0, r2, i0 = 0;
+    int i, j, k, dx, dy, r0, r2, i0 = 0;
     this->n = 0;
     r0 = (int) radius;
     r2 = (int) (radius * radius);
@@ -22,8 +21,8 @@ AdjacencyRelation::AdjacencyRelation(int numRows, int numCols, double radius){
 				this->n++;
 	
 	i = 0;
-    this->offsetCol = new int[n];
-    this->offsetRow = new int[n];
+    this->offsetCol = new int[this->n];
+    this->offsetRow = new int[this->n];
 
 	for (dy = -r0; dy <= r0; dy++) {
 		for (dx = -r0; dx <= r0; dx++) {
@@ -38,8 +37,8 @@ AdjacencyRelation::AdjacencyRelation(int numRows, int numCols, double radius){
 	}
 		
 	double aux;
-	double da[n];
-	double dr[n];
+	double da[this->n];
+	double dr[this->n];
 
 	/* Set clockwise */
 	for (i = 0; i < n; i++) {
@@ -121,7 +120,9 @@ AdjacencyRelation::AdjacencyRelation(int numRows, int numCols, double radius){
     
 }
 
-
+int AdjacencyRelation::getSize(){
+	return this->n;
+}
 
 int AdjacencyRelation::nextValid(){
     this->id += 1;

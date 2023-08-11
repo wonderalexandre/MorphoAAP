@@ -1,5 +1,6 @@
 
 #include <list>
+#include <vector>
 
 #ifndef ADJACENCY_H
 #define ADJACENCY_H
@@ -24,6 +25,7 @@ public:
     AdjacencyRelation(int numCols, int numRows, double radius);
     ~AdjacencyRelation();
     int nextValid();
+    int getSize();
     AdjacencyRelation& getAdjPixels(int row, int col);
     AdjacencyRelation& getAdjPixels(int index);
 

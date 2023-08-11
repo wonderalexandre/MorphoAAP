@@ -22,7 +22,10 @@ private:
 	
 
 public:
+	
 	AttributeProfile(py::array_t<int> &input, int numRows, int numCols);
+	
+	AttributeProfile(py::array_t<int> &input, int numRows, int numCols, double radiusOfAdjacencyRelation);
 
 	~AttributeProfile();
 	
