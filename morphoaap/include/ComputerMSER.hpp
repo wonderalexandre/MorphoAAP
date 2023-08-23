@@ -7,6 +7,7 @@
 #define COMPUTER_MSER_H
 
 
+#define UNDEF -999999999999
 
 
 class ComputerMSER {
@@ -17,8 +18,8 @@ private:
 	int minArea;
 	//int maxArea;
 	int num;
-	std::vector<int> ascendants;
-	std::vector<int> descendants;
+	std::vector<NodeCT*> ascendants;
+	std::vector<NodeCT*> descendants;
 	std::vector<double> stability;
 	double *attribute;
 
@@ -35,17 +36,21 @@ public:
 
     int getNumNodes();
 
-	int descendantNodeWithMinStability(NodeCT* node);
+	NodeCT* descendantWithMaxStability(NodeCT* node);
 	
-    int ascendantNodeWithMinStability(NodeCT* node);
+    NodeCT* ascendantWithMaxStability(NodeCT* node);
 
 	std::vector<double> getStabilities();
 
 	double getStability(NodeCT* node);
 
-	std::vector<int> getAscendants();
+	std::vector<NodeCT*> getAscendants();
 
-	std::vector<int> getDescendants();
+	std::vector<NodeCT*> getDescendants();
+
+	NodeCT* getAscendant(NodeCT* node);
+	
+	NodeCT* getDescendant(NodeCT* node);
 
 };
 

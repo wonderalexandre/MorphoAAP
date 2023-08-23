@@ -5,7 +5,7 @@
 
 #include "../include/NodeCT.hpp"
 #include "../include/ComponentTree.hpp"
-#include "../include/Adjacency8.hpp"
+#include "../include/AdjacencyRelation.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -58,7 +58,6 @@ int ComponentTree::findRoot(int *zPar, int x) {
 
 int* ComponentTree::createTreeByUnionFind(int* orderedPixels, int* img) {
 	const int n = this->numRows * this->numCols;
-	Adjacency8 adj(this->numRows, this->numCols);
 	int *zPar = new int[n];
 	int *parent = new int[n];
 		
@@ -70,7 +69,7 @@ int* ComponentTree::createTreeByUnionFind(int* orderedPixels, int* img) {
 		int p = orderedPixels[i];
 		parent[p] = p;
 		zPar[p] = p;
-		for (int n : adj.getAdjPixels(p)) {
+		for (int n : this->adj->getAdjPixels(p)) {
 			if(zPar[n] != -1){
 				int r = this->findRoot(zPar, n);
 				if(p != r){
@@ -108,20 +107,27 @@ ComponentTree::ComponentTree(int numRows, int numCols, bool isMaxtree){
 	this->numRows = numRows;
 	this->numCols = numCols;
 	this->maxtreeTreeType = isMaxtree;
+	this->adj = new AdjacencyRelation(numRows, numCols, 1.5);	
  }
 
+
  ComponentTree::~ComponentTree(){
+	delete this->adj;  
 	for (NodeCT *node: this->listNodes){
 		delete node;
 		node = nullptr;
 	}
  }
 
-ComponentTree::ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree){
+ComponentTree::ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree) 
+	: ComponentTree(input, numRows, numCols, isMaxtree, 1.5){ }
+ 
+ComponentTree::ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree, double radiusOfAdjacencyRelation){
 	this->numRows = numRows;
 	this->numCols = numCols;
 	this->maxtreeTreeType = isMaxtree;
-		
+	this->adj = new AdjacencyRelation(numRows, numCols, radiusOfAdjacencyRelation);	
+
 	auto buf_input = input.request();
 		
 	int* img = (int *) buf_input.ptr;

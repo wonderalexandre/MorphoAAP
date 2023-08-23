@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "../include/NodeCT.hpp"
+#include "../include/AdjacencyRelation.hpp"
 
 #include <pybind11/numpy.h>
 
@@ -20,6 +21,7 @@ private:
 	int numRows;
 	bool maxtreeTreeType;
 	NodeCT* root;
+	AdjacencyRelation* adj;
 	//int* parent;
 	//int *orderedPixels;
 	int numNodes;
@@ -35,6 +37,8 @@ public:
     ComponentTree(int numRows, int numCols, bool isMaxtree);
 
     ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree);
+
+	ComponentTree(py::array_t<int> &input, int numRows, int numCols, bool isMaxtree, double radiusOfAdjacencyRelation);
 
 	~ComponentTree();
 

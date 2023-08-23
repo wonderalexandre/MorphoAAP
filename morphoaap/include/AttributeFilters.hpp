@@ -58,14 +58,6 @@ class AttributeFilters{
 
     
     static void prunningMinByAdaptativeThreshold(ComponentTree *tree, double *attribute, double threshold, int delta, int *imgOutput){
-		std::vector<bool> selectedPruned(tree->getNumNodes(), false); //nodes pruned
-		for(NodeCT *node: tree->getListNodes()){
-			if(node->getParent() != nullptr && attribute[node->getIndex()] < threshold){
-				if ( attribute[node->getParent()->getIndex()] != attribute[node->getIndex()] ) {
-					selectedPruned[node->getIndex()] = true;
-				}
-			}
-		}
 		
         ComputerMSER mser(tree);
 		mser.computerMSER(delta);
@@ -73,27 +65,26 @@ class AttributeFilters{
 		std::vector<double> stability = mser.getStabilities();
 		std::vector<bool> isPruned(tree->getNumNodes(), false);
 		for(NodeCT *node: tree->getListNodes()){
-            if(selectedPruned[node->getIndex()] && stability[node->getIndex()] != UNDEF && attribute[node->getIndex()] <= threshold){ //node pruned
-				double min = stability[node->getIndex()];
-				
-				int indexDescMinStabilityDesc = mser.descendantNodeWithMinStability(node);
-				int indexAncMinStabilityAsc = mser.ascendantNodeWithMinStability(node);
-				double minDesc = INT_MIN;
-				double minAnc =  INT_MIN;
-				if(indexDescMinStabilityDesc != -1) {
-					minDesc = stability[indexDescMinStabilityDesc];
-				}
-				if(indexAncMinStabilityAsc != -1) {
-					minAnc = stability[indexAncMinStabilityAsc];
-				}
-				
-				if(min >= minDesc && min >= minAnc) {
-					isPruned[node->getIndex()] = true;
-				}else if (minDesc >= min && minDesc >= minAnc) {
-					isPruned[indexDescMinStabilityDesc] = true;
-				}else {
-					isPruned[indexAncMinStabilityAsc] = true;
-				}
+            if(attribute[node->getIndex()] < threshold){ //node pruned
+
+                if(stability[node->getIndex()] == UNDEF){
+                    isPruned[node->getIndex()] = true;
+                }else{
+
+                    double max = stability[node->getIndex()];
+                    int indexDescMaxStability = mser.descendantWithMaxStability(node)->getIndex();
+                    int indexAscMaxStability = mser.ascendantWithMaxStability(node)->getIndex();
+                    double maxDesc = stability[indexDescMaxStability];
+                    double maxAnc = stability[indexAscMaxStability];
+                    
+                    if(max >= maxDesc && max >= maxAnc) {
+                        isPruned[node->getIndex()] = true;
+                    }else if (maxDesc >= max && maxDesc >= maxAnc) {
+                        isPruned[indexDescMaxStability] = true;
+                    }else {
+                        isPruned[indexAscMaxStability] = true;
+                    }
+                }
 			}
 			
 		}

@@ -69,6 +69,6 @@ des = mser.descendants
 
 filter = aap.AttributeFilters(tree)
 
-I = filter.prunningMinByAdaptativeThreshold(area, 50, 1)
+I = filter.prunningMinByAdaptativeThreshold(area, 50, 10)
 print("Imagem filtrada (adap):")
 print( I )
