@@ -73,4 +73,4 @@ adap_attr_profile_2d = adap_attr_profile.reshape(numRows, numCols, numImages)
 # Classification of remote sensing data with AAP
 
 An example of classification of remote sensing data with AAP is available on the *Google Colab* at this 
-[link](https://colab.research.google.com/github/wonderalexandre/aap/blob/main/example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
+[link](https://colab.research.google.com/github/wonderalexandre/MorphoAAP/blob/main/example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
