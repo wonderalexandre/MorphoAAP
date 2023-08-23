@@ -1,8 +1,10 @@
 # MorphoAAP
-MorphoAAP is a C++/Python library for adaptive attribute profile (AAP) extraction. 
+MorphoAAP is a C++/Python library for adaptive attribute profiles (AAP) extraction. 
+
 
 # How to install?
 > ``pip install morphoaap``
+
 
 # Example: extracting AP and AAP from a given image
 
@@ -66,6 +68,7 @@ attr_profile_2d = attr_profile.reshape(numRows, numCols, numImages)
 
 adap_attr_profile_2d = adap_attr_profile.reshape(numRows, numCols, numImages)
 ```
+
 
 # Classification of remote sensing data with AAP
 

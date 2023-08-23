@@ -77,8 +77,8 @@ class CMakeBuild(build_ext):
 
 setup(
   name="morphoaap",
-  version="0.0.9",
-  description="A simple library for adative attribute profiles",
+  version="0.1",
+  description="A simple library for adaptive attribute profiles",
   long_description="",
   author="Wonder Alexandre Luz Alves",
   author_email="worderalexandre@gmail.com",

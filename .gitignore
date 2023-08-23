@@ -38,3 +38,4 @@ build_setup_py/*
 morphoaap.egg-info
 .DS_Store
 .vscode/settings.json
+Pipfile
