@@ -10,7 +10,6 @@
 #include "../include/AttributeComputedIncrementally.hpp"
 
 
-#define UNDEF -999999999999
 
     NodeCT* ComputerMSER::getNodeAscendant(NodeCT* node, int h){
 		NodeCT* n = node;
@@ -40,12 +39,7 @@
 	}
 	
 	double ComputerMSER::getStability(NodeCT* node){
-		if(this->ascendants[node->getIndex()] != nullptr && this->descendants[node->getIndex()] != nullptr){
-			return   ( (double) this->attribute[node->getIndex()]) / (this->attribute[ascendants[node->getIndex()]->getIndex()] - this->attribute[this->descendants[node->getIndex()]->getIndex()]  );
-		}
-		else{
-			return INT_MIN;
-		}
+		return (this->attribute[this->getAscendant(node)->getIndex()] - this->attribute[this->getDescendant(node)->getIndex()]) / this->attribute[node->getIndex()];
 	}
 
 	ComputerMSER::~ComputerMSER(){
@@ -56,7 +50,7 @@
 		this->tree = tree;
 		this->maxVariation = 0.5;
 		this->minArea = 0;
-		//this->maxArea = UNDEF;
+		
 
 		double *_attribute = new double[this->tree->getNumNodes()]; 
 		AttributeComputedIncrementally::computerAttribute(this->tree->getRoot(),
@@ -103,8 +97,8 @@
 			if(this->stability[node->getIndex()] != UNDEF && this->stability[this->getAscendant(node)->getIndex()] != UNDEF && this->stability[this->getDescendant(node)->getIndex()] != UNDEF){
 				maxStabilityDesc = this->stability[this->getDescendant(node)->getIndex()];
 				maxStabilityAsc = this->stability[this->getAscendant(node)->getIndex()];
-				if(this->stability[node->getIndex()] > maxStabilityDesc && this->stability[node->getIndex()] > maxStabilityAsc){
-					if(stability[node->getIndex()] > maxVariation && this->attribute[node->getIndex()] >= minArea){//} && this->attribute[node->getIndex()] <= maxArea){
+				if(this->stability[node->getIndex()] < maxStabilityDesc && this->stability[node->getIndex()] < maxStabilityAsc){
+					if(stability[node->getIndex()] < maxVariation && this->attribute[node->getIndex()] >= minArea){//} && this->attribute[node->getIndex()] <= maxArea){
 						mser[node->getIndex()] = true;
 						this->num++;
 					}
@@ -116,20 +110,7 @@
  
 
 	NodeCT* ComputerMSER::descendantWithMaxStability(NodeCT* node) {
-		if(true)
-			return this->descendants[node->getIndex()];
-		NodeCT* nodeDesc = this->descendants[node->getIndex()];
-		NodeCT* nodeMax = node;
-		NodeCT* nodeTmp = nodeDesc;
-		while(nodeTmp->getParent() != nullptr || nodeDesc->getIndex() == nodeTmp->getIndex()){
-			
-			if(this->stability[nodeMax->getIndex()] < this->stability[nodeTmp->getIndex()])
-				nodeMax = nodeTmp;
-
-			nodeTmp = nodeTmp->getParent();
-		}
-
-		return nodeMax;
+		return this->descendants[node->getIndex()];
 	}
 	
 	std::vector<double> ComputerMSER::getStabilities(){
@@ -137,17 +118,7 @@
 	}
 
     NodeCT* ComputerMSER::ascendantWithMaxStability(NodeCT* node) {
-		if(true)
-			return this->ascendants[node->getIndex()];
-		NodeCT* nodeAsc = this->ascendants[node->getIndex()];
-		NodeCT* nodeMax = nodeAsc;
-		NodeCT* nodeTmp = node;
-		while(nodeTmp->getParent() != nullptr || nodeAsc->getIndex() == nodeTmp->getIndex()){
-			if(this->stability[nodeMax->getIndex()] < this->stability[nodeTmp->getIndex()])
-				nodeMax = nodeTmp;
-			nodeTmp = nodeTmp->getParent();
-		}
-		return nodeMax;
+		return this->ascendants[node->getIndex()];
 	}
 
 	int ComputerMSER::getNumNodes() {

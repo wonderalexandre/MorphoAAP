@@ -77,9 +77,9 @@ class AttributeFilters{
                     double maxDesc = stability[indexDescMaxStability];
                     double maxAnc = stability[indexAscMaxStability];
                     
-                    if(max <= maxDesc && max <= maxAnc) {
+                    if(max >= maxDesc && max >= maxAnc) {
                         isPruned[node->getIndex()] = true;
-                    }else if (maxDesc <= max && maxDesc <= maxAnc) {
+                    }else if (maxDesc >= max && maxDesc >= maxAnc) {
                         isPruned[indexDescMaxStability] = true;
                     }else {
                         isPruned[indexAscMaxStability] = true;

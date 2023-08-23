@@ -7,6 +7,7 @@
 #define COMPUTER_MSER_H
 
 
+#define UNDEF -999999999999
 
 
 class ComputerMSER {
