@@ -70,3 +70,5 @@ adap_attr_profile_2d = adap_attr_profile.reshape(numRows, numCols, numImages)
 # Classification of remote sensing data with AAP
 
 [click here](./example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
+
+@@include[jupyter-notebook](./example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
