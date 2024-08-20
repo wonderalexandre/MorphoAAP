@@ -52,6 +52,9 @@ public:
 	
 	NodeCT* getDescendant(NodeCT* node);
 
+	NodeCT* getNodeInPathWithMaxStability(NodeCT* node, std::vector<bool> isMSER);
+
+
 };
 
 #endif

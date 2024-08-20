@@ -60,7 +60,7 @@ class AttributeFilters{
     static void prunningMinByAdaptativeThreshold(ComponentTree *tree, double *attribute, double threshold, int delta, int *imgOutput){
 		
         ComputerMSER mser(tree);
-		mser.computerMSER(delta);
+		std::vector<bool> isMSER = mser.computerMSER(delta);
 
 		std::vector<double> stability = mser.getStabilities();
 		std::vector<bool> isPruned(tree->getNumNodes(), false);
@@ -70,7 +70,10 @@ class AttributeFilters{
                 if(stability[node->getIndex()] == UNDEF){
                     isPruned[node->getIndex()] = true;
                 }else{
-
+                    
+                    //NodeCT* nodeMax = mser.getNodeInPathWithMaxStability(node, isMSER);
+                    //isPruned[nodeMax->getIndex()] = true;
+                    
                     double max = stability[node->getIndex()];
                     int indexDescMaxStability = mser.descendantWithMaxStability(node)->getIndex();
                     int indexAscMaxStability = mser.ascendantWithMaxStability(node)->getIndex();
@@ -84,6 +87,7 @@ class AttributeFilters{
                     }else {
                         isPruned[indexAscMaxStability] = true;
                     }
+                    
                 }
 			}
 			

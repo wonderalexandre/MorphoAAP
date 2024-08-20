@@ -39,7 +39,7 @@
 	}
 	
 	double ComputerMSER::getStability(NodeCT* node){
-		return (this->attribute[this->getAscendant(node)->getIndex()] - this->attribute[this->getDescendant(node)->getIndex()]) / this->attribute[node->getIndex()];
+		return (this->attribute[this->getAscendant(node)->getIndex()] - this->attribute[this->getDescendant(node)->getIndex()]) / this->attribute[node->getIndex()]  ;
 	}
 
 	ComputerMSER::~ComputerMSER(){
@@ -48,7 +48,7 @@
 
 	ComputerMSER::ComputerMSER(ComponentTree* tree){
 		this->tree = tree;
-		this->maxVariation = 0.5;
+		this->maxVariation = 10.0;
 		this->minArea = 0;
 		
 
@@ -98,7 +98,7 @@
 				maxStabilityDesc = this->stability[this->getDescendant(node)->getIndex()];
 				maxStabilityAsc = this->stability[this->getAscendant(node)->getIndex()];
 				if(this->stability[node->getIndex()] < maxStabilityDesc && this->stability[node->getIndex()] < maxStabilityAsc){
-					if(stability[node->getIndex()] < maxVariation && this->attribute[node->getIndex()] >= minArea){//} && this->attribute[node->getIndex()] <= maxArea){
+					if(stability[node->getIndex()] < this->maxVariation && this->attribute[node->getIndex()] >= minArea){//} && this->attribute[node->getIndex()] <= maxArea){
 						mser[node->getIndex()] = true;
 						this->num++;
 					}
@@ -107,7 +107,27 @@
 		}
 		return mser;
 	}
- 
+
+	NodeCT* ComputerMSER::getNodeInPathWithMaxStability(NodeCT* node, std::vector<bool> isMSER){
+		NodeCT* nodeAsc = this->ascendantWithMaxStability(node);
+		NodeCT* nodeDes = this->descendantWithMaxStability(node);
+		NodeCT* nodeMax = node;
+
+
+		double max = stability[node->getIndex()];
+        double maxDesc = stability[nodeDes->getIndex()];
+        double maxAnc = stability[nodeAsc->getIndex()];
+                    
+                    if(max <= maxDesc && max <= maxAnc) {
+                        return node;
+                    }else if (maxDesc <= maxAnc) {
+                        return nodeDes;
+                    }else {
+                       return nodeAsc;
+                    }
+		
+	}
+
 
 	NodeCT* ComputerMSER::descendantWithMaxStability(NodeCT* node) {
 		return this->descendants[node->getIndex()];

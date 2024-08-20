@@ -3,7 +3,7 @@ include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 
 FetchContent_Declare(
-    pybind11
+   pybind11
     URL https://github.com/pybind/pybind11/archive/v2.3.0.tar.gz
     )
 
@@ -24,7 +24,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 project(morphoaap)
 
 # Include dir
-#include_directories(/usr/local/include)
+include_directories(/usr/local/include)
 
 # Src
 AUX_SOURCE_DIRECTORY(src SRC_FILES)
