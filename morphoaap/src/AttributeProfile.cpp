@@ -42,34 +42,25 @@ py::array_t<double> AttributeProfile::getAP(std::list<double> thresholds, int at
 			{ n, ap_size  },  /* Number of elements for each dimension */
 			{ sizeof(int), sizeof(int) * n  }  /* Strides for each dimension */
 	));
-	if(attributeType != 0){
+	if(attributeType > 4){
 		std::cout << "attribute type not implemented. At the moment only type (attributeType = 0) of area is available";
         return ap_numpy;
 	}
 
-	double attributeMintree[this->mintree->getNumNodes()];
-	double attributeMaxtree[this->maxtree->getNumNodes()]; 
+	double *attributeMintree = new double[this->mintree->getNumNodes()];
+	double *attributeMaxtree = new double[this->maxtree->getNumNodes()]; 
 	
-	AttributeComputedIncrementally::computerAttribute(this->mintree->getRoot(),
-						[&attributeMintree](NodeCT* node) -> void {
-							attributeMintree[node->getIndex()] = node->getCNPs().size();
-						},
-						[&attributeMintree](NodeCT* root, NodeCT* child) -> void {
-							attributeMintree[root->getIndex()] += attributeMintree[child->getIndex()];
-						},
-						[](NodeCT* node) -> void { 							
-						});
-
-	AttributeComputedIncrementally::computerAttribute(this->maxtree->getRoot(),
-						[&attributeMaxtree](NodeCT* node) -> void {
-							attributeMaxtree[node->getIndex()] = node->getCNPs().size();
-						},
-						[&attributeMaxtree](NodeCT* root, NodeCT* child) -> void {
-							attributeMaxtree[root->getIndex()] += attributeMaxtree[child->getIndex()];
-						},
-						[](NodeCT* node) -> void { 							
-						});
-
+	if(attributeType == 0){
+		AttributeComputedIncrementally::computerArea(this->maxtree, attributeMaxtree);
+		AttributeComputedIncrementally::computerArea(this->mintree, attributeMintree);
+	}else if(attributeType >= 1 && attributeType <= 3){
+		AttributeComputedIncrementally::computerBoundingBoxAttribute(this->maxtree, attributeMaxtree, attributeType);
+		AttributeComputedIncrementally::computerBoundingBoxAttribute(this->mintree, attributeMintree, attributeType);
+	}else if(attributeType == 4){
+		AttributeComputedIncrementally::computerVolume(this->maxtree, attributeMaxtree);
+		AttributeComputedIncrementally::computerVolume(this->mintree, attributeMintree);
+	}
+	
 
 	auto buf_ap = ap_numpy.request();
 	int *ap = (int *) buf_ap.ptr;
@@ -107,34 +98,24 @@ py::array_t<double> AttributeProfile::getAAP(std::list<double> thresholds, int a
 			{ n, ap_size  },  /* Number of elements for each dimension */
 			{ sizeof(int), sizeof(int) * n  }  /* Strides for each dimension */
 	));
-	if(attributeType != 0){
+	if(attributeType > 4){
 		std::cout << "attribute type not implemented. At the moment only type (attributeType = 0) of area is available";
         return ap_numpy;
 	}
 
-	double attributeMintree[this->mintree->getNumNodes()];
-	double attributeMaxtree[this->maxtree->getNumNodes()]; 
+	double *attributeMintree = new double[this->mintree->getNumNodes()];
+	double *attributeMaxtree = new double[this->maxtree->getNumNodes()]; 
 	
-	AttributeComputedIncrementally::computerAttribute(this->mintree->getRoot(),
-						[&attributeMintree](NodeCT* node) -> void {
-							attributeMintree[node->getIndex()] = node->getCNPs().size();
-						},
-						[&attributeMintree](NodeCT* root, NodeCT* child) -> void {
-							attributeMintree[root->getIndex()] += attributeMintree[child->getIndex()];
-						},
-						[](NodeCT* node) -> void { 							
-						});
-
-	AttributeComputedIncrementally::computerAttribute(this->maxtree->getRoot(),
-						[&attributeMaxtree](NodeCT* node) -> void {
-							attributeMaxtree[node->getIndex()] = node->getCNPs().size();
-						},
-						[&attributeMaxtree](NodeCT* root, NodeCT* child) -> void {
-							attributeMaxtree[root->getIndex()] += attributeMaxtree[child->getIndex()];
-						},
-						[](NodeCT* node) -> void { 							
-						});
-
+	if(attributeType == 0){
+		AttributeComputedIncrementally::computerArea(this->maxtree, attributeMaxtree);
+		AttributeComputedIncrementally::computerArea(this->mintree, attributeMintree);
+	}else if(attributeType >= 1 && attributeType <= 3){
+		AttributeComputedIncrementally::computerBoundingBoxAttribute(this->maxtree, attributeMaxtree, attributeType);
+		AttributeComputedIncrementally::computerBoundingBoxAttribute(this->mintree, attributeMintree, attributeType);
+	}else if(attributeType == 4){
+		AttributeComputedIncrementally::computerVolume(this->maxtree, attributeMaxtree);
+		AttributeComputedIncrementally::computerVolume(this->mintree, attributeMintree);
+	}
 
 	auto buf_ap = ap_numpy.request();
 	int *ap = (int *) buf_ap.ptr;

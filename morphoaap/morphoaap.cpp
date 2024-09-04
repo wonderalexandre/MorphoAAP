@@ -54,7 +54,7 @@ void init_AttributeProfile(py::module &m){
 void init_AttributeComputedIncrementally(py::module &m){
     	py::class_<AttributeComputedIncrementally>(m, "Attribute")
         //.def_static("computerAttribute", &AttributeComputedIncrementally::computerAttribute)
-        .def_static("computerArea", &AttributeComputedIncrementally::computerArea);
+        .def_static("computerAttribute", &AttributeComputedIncrementally::computerAttributes);
 }
 
 void init_AttributeFilters(py::module &m){
