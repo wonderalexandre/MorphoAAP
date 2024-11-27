@@ -1,21 +1,43 @@
 # MorphoAAP
-MorphoAAP is a C++/Python library for adaptive attribute profiles (AAP) extraction. 
 
+MorphoAAP is a C++/Python library for extracting **Adaptive Attribute Profiles (AAP)**, a feature extraction technique for pattern recognition, particularly in remote sensing and multichannel image classification.
 
-# How to install?
-> ``pip install morphoaap``
+This library implements the method described in our paper:  
 
+**Wonder A.L. Alves, Wander S. Campos, Charles F. Gobber, Dennis J. Silva, Ronaldo F. Hashimoto**,  
+*Multichannel image classification based on adaptive attribute profiles*, Pattern Recognition Letters, 2024,  
+DOI: [10.1016/j.patrec.2024.11.015](https://doi.org/10.1016/j.patrec.2024.11.015).  
 
-# Example: extracting AP and AAP from a given image
+If you use **MorphoAAP** in your research, please cite our paper.
 
-1. Importing common libraries
+---
+
+# 🔧 How to Install
+
+MorphoAAP is available on PyPI. You can install it using pip:
+
+```bash
+pip install morphoaap
 ```
+
+---
+
+
+# 🚀 Example: Extracting AP and AAP
+
+Here is an example of how to extract Attribute Profiles (AP) and Adaptive Attribute Profiles (AAP) using MorphoAAP:
+
+Step 1: Importing the library
+```python
 import numpy as np
 import morphoaap as aap
 ```
 
-2. Input: an image
-```
+Step 2: Loading an input image
+
+Represent the input image as a 2D NumPy array. This image will be used as the source for extracting features.
+
+```python
 img = np.array([
 [122,127,166,201,152, 96, 54, 44, 40, 41, 42, 43, 44, 44, 37],
 [133,143,213,246,236,196,137, 85, 55, 43, 44, 45, 35, 40, 42],
@@ -36,41 +58,63 @@ img = np.array([
 [ 49, 45, 44, 48, 71, 89, 49, 47, 71, 95,162,156,119,122,111]
 ])
 
-numRows, numCols = img.shape
+num_rows, num_cols = img.shape
 img_vector = img.ravel()
 ```
 
-3. Creating an ``AttributeProfile`` object
+Step 3: Creating an AttributeProfile object
 
-```
-ap = aap.AttributeProfile(img_vector, numRows, numCols)
+Initialize the AttributeProfile object by providing the flattened image vector and its dimensions.
+
+```python
+ap = aap.AttributeProfile(img_vector, num_rows, num_cols)
 ```
 
-4. Extraction of AP or AAP using the methods: ``getAP(thresholds, attribute_type)`` and ``getAAP(thresholds, attribute_type, delta_MSER)``
-```
-attribute_type = 0 #AREA
+Step 4: Extracting AP and AAP
+
+Use the getAP method to extract Attribute Profiles and getAAP for Adaptive Attribute Profiles. The attribute_type parameter defines the type of attribute to be used:
+- attribute_type=0 → Area
+- attribute_type=1 → Diagonal
+- attribute_type=2 → Width of the bounding box
+- attribute_type=3 → Height of the bounding box
+- attribute_type=4 → Volume
+
+```python
+# Parameters
+attribute_type = 0  # AREA
 thresholds = [10, 50, 100]
 
+# Extract Attribute Profile (AP)
 attr_profile = ap.getAP(thresholds, attribute_type)
-print("attribute profile")
+print("Attribute Profile:")
 print(attr_profile)
 
-delta_MSER = 20
+# Adaptive Attribute Profile
+delta_MSER = 10
 adap_attr_profile = ap.getAAP(thresholds, attribute_type, delta_MSER)
-print("adaptive attribute profile")
+print("Adaptive Attribute Profile:")
 print(adap_attr_profile)
 ```
-5. If needed, modify the output shape to 2D:
+
+
+
+Step 5: Reshaping the output
+
+Reshape the extracted profiles back into 2D or 3D arrays for visualization.
+```python
+num_images = adap_attr_profile.shape[1]
+
+# Reshape to 2D arrays
+attr_profile_2d = attr_profile.reshape(num_rows, num_cols, num_images)
+adap_attr_profile_2d = adap_attr_profile.reshape(num_rows, num_cols, num_images)
 ```
-numImages = adap_attr_profile.shape[1] # same as: len(thresholds) * 2 + 1
-
-attr_profile_2d = attr_profile.reshape(numRows, numCols, numImages)
-
-adap_attr_profile_2d = adap_attr_profile.reshape(numRows, numCols, numImages)
-```
+With these steps, you can extract both AP and AAP from an image and prepare the results for further analysis or visualization.
 
 
-# Classification of remote sensing data with AAP
+---
+
+
+# 📊 Classification of remote sensing data with AAP
 
 An example of classification of remote sensing data with AAP is available on the *Google Colab* at this 
 [link](https://colab.research.google.com/github/wonderalexandre/MorphoAAP/blob/main/example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
