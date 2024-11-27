@@ -27,13 +27,13 @@ pip install morphoaap
 
 Here is an example of how to extract Attribute Profiles (AP) and Adaptive Attribute Profiles (AAP) using MorphoAAP:
 
-Step 1: Importing the library
+**Step 1: Importing the library**
 ```python
 import numpy as np
 import morphoaap as aap
 ```
 
-Step 2: Loading an input image
+**Step 2: Loading an input image**
 
 Represent the input image as a 2D NumPy array. This image will be used as the source for extracting features.
 
@@ -62,7 +62,7 @@ num_rows, num_cols = img.shape
 img_vector = img.ravel()
 ```
 
-Step 3: Creating an AttributeProfile object
+**Step 3: Creating an AttributeProfile object**
 
 Initialize the AttributeProfile object by providing the flattened image vector and its dimensions.
 
@@ -70,7 +70,7 @@ Initialize the AttributeProfile object by providing the flattened image vector a
 ap = aap.AttributeProfile(img_vector, num_rows, num_cols)
 ```
 
-Step 4: Extracting AP and AAP
+**Step 4: Extracting AP and AAP**
 
 Use the getAP method to extract Attribute Profiles and getAAP for Adaptive Attribute Profiles. The attribute_type parameter defines the type of attribute to be used:
 - attribute_type=0 → Area
@@ -98,7 +98,7 @@ print(adap_attr_profile)
 
 
 
-Step 5: Reshaping the output
+**Step 5: Reshaping the output**
 
 Reshape the extracted profiles back into 2D or 3D arrays for visualization.
 ```python
@@ -116,5 +116,6 @@ With these steps, you can extract both AP and AAP from an image and prepare the 
 
 # 📊 Classification of remote sensing data with AAP
 
-An example of classification of remote sensing data with AAP is available on the *Google Colab* at this 
-[link](https://colab.research.google.com/github/wonderalexandre/MorphoAAP/blob/main/example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
+- The experiments from **Section 5.3: Comparison of AP Variants versus AAP** are available on Google Colab through this [link](https://colab.research.google.com/github/wonderalexandre/MorphoAAP/blob/main/example/Experiments_with_different_APs_methods.ipynb).
+
+
