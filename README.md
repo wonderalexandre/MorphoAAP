@@ -116,6 +116,10 @@ With these steps, you can extract both AP and AAP from an image and prepare the 
 
 # 📊 Classification of remote sensing data with AAP
 
+- An example of classification of remote sensing data with AAP is available on the *Google Colab* at this 
+[link](https://colab.research.google.com/github/wonderalexandre/MorphoAAP/blob/main/example/Classification_of_remote_sensing_data_with_MorphAAP.ipynb)
+
+
 - The experiments from **Section 5.3: Comparison of AP Variants versus AAP** are available on Google Colab through this [link](https://colab.research.google.com/github/wonderalexandre/MorphoAAP/blob/main/example/Experiments_with_different_APs_methods.ipynb).
 
 
