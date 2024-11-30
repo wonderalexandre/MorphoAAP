@@ -34,8 +34,11 @@ cpp/.DS_Store
 cpp/include/.DS_Store
 build/*
 dist/*
+.virtual_documents/*
+example/.virtual_documents/*
+example/.ipynb_checkpoints/*
 build_setup_py/*
 morphoaap.egg-info
 .DS_Store
-.vscode/settings.json
+.vscode/*
 Pipfile
