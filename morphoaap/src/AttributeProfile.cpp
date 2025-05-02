@@ -2,6 +2,7 @@
 #include <vector>
 #include <stack>
 #include <unordered_map>
+#include <iostream>
 
 #include "../include/AttributeProfile.hpp"
 #include "../include/ComponentTree.hpp"
@@ -134,6 +135,8 @@ py::array_t<double> AttributeProfile::getAAP(std::list<double> thresholds, int a
 		mid_offset += n;
 		offset -= n;
 	}
+	delete [] attributeMintree;
+	delete [] attributeMaxtree;
 		
 	return ap_numpy;
 
